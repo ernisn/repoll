@@ -1,3 +1,11 @@
+# Repoll
+
+Redo of Polly (https://github.com/ernisn/polly)
+
+Based on Polly (https://github.com/laaksoharju/polly | @20220611)
+
+---
+
 # polly
 
 ## Project setup
