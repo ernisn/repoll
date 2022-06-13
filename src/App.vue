@@ -3,6 +3,10 @@
 </template>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+}
 #app {
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,18 +14,4 @@
   text-align: center;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  padding:0.4em;
-  font-weight: bold;
-  color: blue;
-}
-
-#nav a.router-link-exact-active {
-  background-color: blue;
-  color: white;
-}
 </style>
