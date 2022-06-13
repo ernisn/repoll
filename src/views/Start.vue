@@ -18,6 +18,8 @@
     <input type="text" v-model="id">
   </label>
   <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
+  <br>
+  <router-link v-bind:to="'/result/'+id" tag="button">See Results</router-link>
 </template>
 
 <script>
