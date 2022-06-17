@@ -16,9 +16,11 @@
   <div>
     Poll link: 
     <input type="text" v-model="pollId" id="pollIdEnter">
+    <div id ="hideAfterCreate">
     <button v-on:click="createPoll">
       Create poll
     </button>
+    </div>
 
     <div id ="hideBeforeCreate">
     <div>
@@ -87,6 +89,8 @@ export default {
       if(document.getElementById("pollIdEnter").value != "") {
         var elementToDisplay = document.getElementById("hideBeforeCreate");
         elementToDisplay.style.display = "block";
+        var elementToHide = document.getElementById("hideAfterCreate");
+        elementToHide.style.display = "none";
         socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
       }
       else{
