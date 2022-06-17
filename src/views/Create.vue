@@ -15,10 +15,12 @@
 
   <div>
     Poll link: 
-    <input type="text" v-model="pollId">
+    <input type="text" v-model="pollId" id="pollIdEnter">
     <button v-on:click="createPoll">
       Create poll
     </button>
+
+    <div id ="hideBeforeCreate">
     <div>
       {{uiLabels.question}}:
       <input type="text" v-model="question">
@@ -39,6 +41,9 @@
     <button v-on:click="runQuestion">
       Run question
     </button>
+    </div>
+
+    <br>
     {{data}}
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
   </div>
@@ -79,7 +84,15 @@ export default {
   },
   methods: {
     createPoll: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      if(document.getElementById("pollIdEnter").value != "") {
+        var elementToDisplay = document.getElementById("hideBeforeCreate");
+        elementToDisplay.style.display = "block";
+        socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      }
+      else{
+        console.log("You must enter a poll id before creating poll")
+      }
+      
     },
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
@@ -125,6 +138,10 @@ header {
   height: 2rem;
   cursor: pointer;
   font-size: 1.5rem;
+}
+
+#hideBeforeCreate {
+  display: none
 }
 
 @media screen and (max-width:50em) {
