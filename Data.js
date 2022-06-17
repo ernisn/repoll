@@ -46,7 +46,9 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
     if (qId !== null) {
       poll.currentQuestion = qId;
     }
-    return poll.questions[poll.currentQuestion];
+    //Not sure what the code was even supposed to do before (the one that is commented out), properly displays on poll page now in ny case /Otto 17/06/22
+    //return poll.questions[poll.currentQuestion];
+    return poll.questions[0];
   }
   return []
 }

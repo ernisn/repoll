@@ -24,22 +24,23 @@
 
     <div id ="hideBeforeCreate">
     <div>
-      {{uiLabels.question}}:
+      {{uiLabels.question}} <input type="number" v-model="questionNumber">:
       <input type="text" v-model="question">
       <div>
-        Answers:
-        <input v-for="(_, i) in answers" 
+        Answer alternatives:
+        <input id="answerAlternatives" v-for="(_, i) in answers" 
                v-model="answers[i]" 
                v-bind:key="'answer'+i">
+        <br>
         <button v-on:click="addAnswer">
           Add answer alternative
         </button>
       </div>
     </div>
+    <br>
     <button v-on:click="addQuestion">
-      Add question
+      Add question above to poll
     </button>
-    <input type="number" v-model="questionNumber">
     <button v-on:click="runQuestion">
       Run question
     </button>
@@ -96,10 +97,12 @@ export default {
       else{
         console.log("You must enter a poll id before creating poll")
       }
-      
     },
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, questionNumber: this.questionNumber} );
+      this.questionNumber +=1;
+      this.question = "";
+      this.answers = ['', ''];
     },
     addAnswer: function () {
       this.answers.push("");
