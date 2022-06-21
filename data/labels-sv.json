@@ -1,10 +1,11 @@
 {
-	"sales-pitch": "Svar. Helt. Enkelt.",
+	"changeLanguage": "Change to English",
+	"createPoll": "Skapa Quiz",
 	"invite": "Bjud in deltagare med den här länken:",
-	"createPoll": "Skapa röstning",
-	"participatePoll": "Delta i röstning",
 	"joinPoll": "Starta Quiz",
+	"participatePoll": "Delta i quiz",
+	"pollId": "Ange quiz-id:",
 	"question": "Fråga",
 	"results": "Se resultat",
-	"changeLanguage": "Change to English"
+	"sales-pitch": "Svar. Helt. Enkelt."
 }

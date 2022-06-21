@@ -1,10 +1,11 @@
 {
-	"sales-pitch": "Simply. Great. Polling.",
-	"invite": "Invite participants with this link:",
+	"changeLanguage": "Byt till svenska",
 	"createPoll": "Create poll",
-	"participatePoll": "Participate in poll",
+	"invite": "Invite participants with this link:",
 	"joinPoll": "Join Poll",
+	"participatePoll": "Participate in poll",
+	"pollId": "Write poll id:",
 	"question": "Question",
 	"results": "Poll Results",
-	"changeLanguage": "Byt till svenska"
+	"sales-pitch": "Simply. Great. Polling."
 }
