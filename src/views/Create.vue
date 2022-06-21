@@ -18,7 +18,7 @@
     <input type="text" v-model="pollId" id="pollIdEnter">
     <div id ="hideAfterCreate">
     <button v-on:click="createPoll">
-      Create poll
+      {{uiLabels.createPoll}}
     </button>
     </div>
 
@@ -110,6 +110,13 @@ export default {
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
       console.log({pollId: this.pollId, questionNumber: this.questionNumber, q: this.question, a: this.answers})
+    },
+    switchLanguage: function() {
+      if (this.lang === "en")
+        this.lang = "sv"
+      else
+        this.lang = "en"
+      socket.emit("switchLanguage", this.lang)
     }
   }
 }
