@@ -109,7 +109,7 @@ export default {
     },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
-      console.log({pollId: this.pollId, questionNumber: this.questionNumber})
+      console.log({pollId: this.pollId, questionNumber: this.questionNumber, q: this.question, a: this.answers})
     }
   }
 }
