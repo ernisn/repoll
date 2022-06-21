@@ -33,7 +33,7 @@
                v-bind:key="'answer'+i">
         <br>
         <button v-on:click="addAnswer">
-          Add answer alternative
+          {{uiLabels.addAnswer}}
         </button>
       </div>
     </div>
