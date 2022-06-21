@@ -3,6 +3,8 @@
 	"invite": "Invite participants with this link:",
 	"createPoll": "Create poll",
 	"participatePoll": "Participate in poll",
+	"joinPoll": "Join Poll",
 	"question": "Question",
+	"results": "Poll Results",
 	"changeLanguage": "Byt till svenska"
 }

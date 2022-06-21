@@ -7,9 +7,9 @@
   </header>
 
   <ResponsiveNav v-bind:hideNav="hideNav">
-    <router-link v-bind:to="'/'">Join Poll</router-link>
+    <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <router-link v-bind:to="'/result/'+id">Poll Results</router-link>
+    <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
 

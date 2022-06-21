@@ -3,6 +3,8 @@
 	"invite": "Bjud in deltagare med den här länken:",
 	"createPoll": "Skapa röstning",
 	"participatePoll": "Delta i röstning",
+	"joinPoll": "Starta Quiz",
 	"question": "Fråga",
+	"results": "Se resultat",
 	"changeLanguage": "Change to English"
 }
