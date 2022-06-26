@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div v-if="!isClicked">
     {{pollId}}
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
   <div>
-    <button>
-      {{uiLabels.nextQuestion}}
+    <button v-on:click="prevQuestion">
+      Prev
     </button>
-    <button>
-      {{uiLabels.prevQuestion}}
+    <button v-on:click="nextQuestion">
+      Next
     </button>
   </div>
 </template>
@@ -44,6 +44,17 @@ export default {
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
+    },
+    nextQuestion: function(){
+      socket.emit("getNextQ", {pollId: this.pollId});
+      this.isClicked = false;
+    },
+    prevQuestion: function(){
+      socket.emit("getPrevQ", {pollId: this.pollId});
+      //Resets "next question" button if it has previously been changed to say "View Results"
+      document.getElementById("nextQuestionButton").innerHTML = 'Next Question';
+      document.getElementById("nextQuestionButton").onclick = 'nextQuestion';
+      this.isClicked = false;
     }
   }
 }
