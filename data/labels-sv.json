@@ -4,8 +4,10 @@
 	"createPoll": "Skapa Quiz",
 	"invite": "Bjud in deltagare med den här länken:",
 	"joinPoll": "Starta Quiz",
+	"nextQuestion": "Nästa fråga",
 	"participatePoll": "Delta i quiz",
 	"pollId": "Ange quiz-id:",
+	"prevQuestion": "Föregående fråga",
 	"question": "Fråga",
 	"results": "Se resultat",
 	"sales-pitch": "Svar. Helt. Enkelt."

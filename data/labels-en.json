@@ -4,8 +4,10 @@
 	"createPoll": "Create poll",
 	"invite": "Invite participants with this link:",
 	"joinPoll": "Join Poll",
+	"nextQuestion": "Next Question",
 	"participatePoll": "Participate in poll",
 	"pollId": "Write poll id:",
+	"prevQuestion": "Previous Question",
 	"question": "Question",
 	"results": "Poll Results",
 	"sales-pitch": "Simply. Great. Polling."

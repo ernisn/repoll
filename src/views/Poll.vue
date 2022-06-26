@@ -4,6 +4,14 @@
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
+  <div>
+    <button>
+      {{uiLabels.nextQuestion}}
+    </button>
+    <button>
+      {{uiLabels.prevQuestion}}
+    </button>
+  </div>
 </template>
 
 <script>
