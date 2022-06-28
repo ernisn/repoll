@@ -19,14 +19,12 @@
 // @ is an alias to /src
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
-import ResponsiveNav from '../components/ResponsiveNav.vue';
 const socket = io();
 
 export default {
   name: 'Poll',
   components: {
-    Question,
-    ResponsiveNav
+    Question
 },
   data: function () {
     return {
