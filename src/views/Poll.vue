@@ -47,9 +47,6 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
-    socket.on("init", (labels) => {
-      this.uiLabels = labels
-    })
   },
   methods: {
     submitAnswer: function (answer) {
