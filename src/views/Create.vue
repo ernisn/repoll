@@ -14,8 +14,7 @@
   </ResponsiveNav>
 
   <div>
-    Poll link: 
-    <input type="text" v-model="pollId" id="pollIdEnter">
+    {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
     <div id ="hideAfterCreate">
     <button v-on:click="createPoll">
       {{uiLabels.createPoll}}
@@ -27,8 +26,7 @@
       {{uiLabels.question}} <input type="number" v-model="questionNumber">:
       <input type="text" v-model="question">
       <div>
-        Answer alternatives:
-        <input id="answerAlternatives" v-for="(_, i) in answers" 
+        {{uiLabels.answerAlternatives}}<input id="answerAlternatives" v-for="(_, i) in answers" 
                v-model="answers[i]" 
                v-bind:key="'answer'+i">
         <br>
@@ -39,10 +37,10 @@
     </div>
     <br>
     <button v-on:click="addQuestion">
-      Add question above to poll
+      {{uiLabels.addQuestion}}
     </button>
     <button v-on:click="runQuestion">
-      Run question
+      {{uiLabels.runQuestion}}
     </button>
     </div>
 
