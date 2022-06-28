@@ -81,6 +81,13 @@ Data.prototype.getAnswers = function(pollId) {
   }
   return {}
 }
+Data.prototype.getPoll = function(pollId) {
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    return poll;
+  }
+  return {};
+}
 module.exports = Data;
 
 
