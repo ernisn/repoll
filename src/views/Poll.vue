@@ -7,10 +7,10 @@
   </div>
   <div>
     <button v-on:click="prevQuestion">
-      Prev
+      {{uiLabels.prevQuestion}}
     </button>
     <button v-on:click="nextQuestion">
-      Next
+      {{uiLabels.nextQuestion}}
     </button>
   </div>
 </template>
@@ -32,7 +32,8 @@ export default {
         q: "",
         a: []
       },
-      pollId: "inactive poll"
+      pollId: "inactive poll",
+      uiLabels: {}
     }
   },
   created: function () {
