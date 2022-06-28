@@ -13,6 +13,10 @@
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
 
+  <section class="screen">
+    
+  </section>
+
   <div>
     Poll link: 
     <input type="text" v-model="pollId">
@@ -96,7 +100,7 @@ export default {
 
 <style scoped>
 header {
-  background-color: gray;
+  background-color: black;
   width: 100%;
   display: grid;
   grid-template-columns: 2em auto;

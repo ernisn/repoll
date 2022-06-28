@@ -33,7 +33,7 @@ export default {
   top: -1.2em;
 }
 .bar:nth-child(1) div:nth-child(1) {
-  background-color:red;
+  background-color:green;
 }
 .bar:nth-child(2) div:nth-child(1) {
   background-color:blue;

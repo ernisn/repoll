@@ -62,7 +62,7 @@ export default {
 
 <style scoped>
   header {
-    background-color: gray;
+    background-color: black;
     width: 100%;
     display: grid;
     grid-template-columns: 2em auto;
@@ -80,7 +80,7 @@ export default {
     margin-right: 0.5rem; 
   }
   .hamburger {
-    color:white;
+    color:green;
     width:1em;
     display: flex;
     align-items: center;

@@ -1,4 +1,12 @@
 <template>
+<section id = "screen">
+<section id = "question">
+  <header>
+    <a href="/"><h3>This is the repoll</h3> </a>
+
+  </header>
+</section>
+</section>
 
   <div>
     {{question}}
@@ -38,3 +46,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.screen {
+  background-color: green;;
+}
+
+</style>
