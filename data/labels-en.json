@@ -1,8 +1,18 @@
 {
-	"sales-pitch": "Simply. Great. Polling.",
-	"invite": "Invite participants with this link:",
+	"addAnswer": "Add answer alternative",
+	"addQuestion": "Add question above to poll",
+	"answerAlternatives": "Answer alternatives",
+	"changeLanguage": "Byt till svenska",
 	"createPoll": "Create poll",
+	"invite": "Invite participants with this link:",
+	"joinPoll": "Join Poll",
+	"nextQuestion": "Next Question",
 	"participatePoll": "Participate in poll",
+	"pollId": "Write poll id:",
+	"pollLink": "Poll link: ",
+	"prevQuestion": "Previous Question",
 	"question": "Question",
-	"changeLanguage": "Byt till svenska"
+	"results": "Poll Results",
+	"runQuestion": "Run question",
+	"sales-pitch": "Simply. Great. Polling."
 }

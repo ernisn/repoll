@@ -7,18 +7,17 @@
   </header>
 
   <ResponsiveNav v-bind:hideNav="hideNav">
-    <router-link v-bind:to="'/'">Join Poll</router-link>
+    <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <router-link v-bind:to="'/result/'+id">Poll Results</router-link>
+    <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
 
   <div>
-    Poll link: 
-    <input type="text" v-model="pollId" id="pollIdEnter">
+    {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
     <div id ="hideAfterCreate">
     <button v-on:click="createPoll">
-      Create poll
+      {{uiLabels.createPoll}}
     </button>
     </div>
 
@@ -27,22 +26,21 @@
       {{uiLabels.question}} <input type="number" v-model="questionNumber">:
       <input type="text" v-model="question">
       <div>
-        Answer alternatives:
-        <input id="answerAlternatives" v-for="(_, i) in answers" 
+        {{uiLabels.answerAlternatives}}<input id="answerAlternatives" v-for="(_, i) in answers" 
                v-model="answers[i]" 
                v-bind:key="'answer'+i">
         <br>
         <button v-on:click="addAnswer">
-          Add answer alternative
+          {{uiLabels.addAnswer}}
         </button>
       </div>
     </div>
     <br>
     <button v-on:click="addQuestion">
-      Add question above to poll
+      {{uiLabels.addQuestion}}
     </button>
     <button v-on:click="runQuestion">
-      Run question
+      {{uiLabels.runQuestion}}
     </button>
     </div>
 
@@ -109,6 +107,14 @@ export default {
     },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
+      console.log({pollId: this.pollId, questionNumber: this.questionNumber, q: this.question, a: this.answers})
+    },
+    switchLanguage: function() {
+      if (this.lang === "en")
+        this.lang = "sv"
+      else
+        this.lang = "en"
+      socket.emit("switchLanguage", this.lang)
     }
   }
 }
