@@ -81,17 +81,16 @@ Data.prototype.submitAnswer = function(pollId, answer) {
   if (typeof poll !== 'undefined') {
     let answers = poll.answers[poll.currentQuestion];
     console.log("let answers in submitAnswer:", answers, typeof answers)
-    if (typeof answers === 'undefined' && poll.answers !== 'undefined'){
-      answers = {};
-      answers[answer] = 2;
-      poll.answers.push(answers);
-      console.log("2 This is poll.answers:", poll.answers, "and answers:", answers, typeof answers, "\n --> answers[answer]=", answers[answer])
-    }
-    else if (typeof answers === 'undefined') {
+    if (typeof answers !== 'object') {
       answers = {};
       answers[answer] = 1;
       poll.answers.push(answers);
       console.log("This is poll.answers:", poll.answers, "and answers:", answers, typeof answers, "\n --> answers[answer]=", answers[answer])
+      if (poll.answers.length > 1) {
+        answers = {};
+        answers[answer] = 2;
+        poll.answers.push(answers);
+      }
     }
     else if (typeof answers[answer] === 'undefined') {
       answers[answer] = 1;
