@@ -13,9 +13,12 @@ prototype of the Data object/class
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 ***********************************************/
 
-Data.prototype.getUILabels = function (lang = "en") {
-  const ui = require("./data/labels-" + lang + ".json");
-  return ui;
+Data.prototype.addQuestion = function(pollId, q) {
+  const poll = this.polls[pollId];
+  console.log("question added to", pollId, q);
+  if (typeof poll !== 'undefined') {
+    poll.questions.push(q);
+  }
 }
 
 Data.prototype.createPoll = function(pollId, lang="en") {
@@ -31,12 +34,22 @@ Data.prototype.createPoll = function(pollId, lang="en") {
   return this.polls[pollId];
 }
 
-Data.prototype.addQuestion = function(pollId, q) {
+Data.prototype.getAnswers = function(pollId) {
   const poll = this.polls[pollId];
-  console.log("question added to", pollId, q);
   if (typeof poll !== 'undefined') {
-    poll.questions.push(q);
+    const answers = poll.answers[poll.currentQuestion];
+    if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
+      return {q: poll.questions[poll.currentQuestion].q, a: answers};
+    }
   }
+  return {}
+}
+Data.prototype.getPoll = function(pollId) {
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    return poll;
+  }
+  return {};
 }
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
@@ -51,6 +64,11 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
     return poll.questions[0];
   }
   return []
+}
+
+Data.prototype.getUILabels = function (lang = "en") {
+  const ui = require("./data/labels-" + lang + ".json");
+  return ui;
 }
 
 Data.prototype.submitAnswer = function(pollId, answer) {
@@ -71,23 +89,6 @@ Data.prototype.submitAnswer = function(pollId, answer) {
   }
 }
 
-Data.prototype.getAnswers = function(pollId) {
-  const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
-    const answers = poll.answers[poll.currentQuestion];
-    if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
-      return {q: poll.questions[poll.currentQuestion].q, a: answers};
-    }
-  }
-  return {}
-}
-Data.prototype.getPoll = function(pollId) {
-  const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
-    return poll;
-  }
-  return {};
-}
 module.exports = Data;
 
 
