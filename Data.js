@@ -77,20 +77,24 @@ Data.prototype.getUILabels = function (lang = "en") {
 
 Data.prototype.submitAnswer = function(pollId, answer) {
   const poll = this.polls[pollId];
-  //console.log("answer submitted for ", pollId, answer);
+  console.log("answer submitted for ", pollId, answer);
   if (typeof poll !== 'undefined') {
     let answers = poll.answers[poll.currentQuestion];
+    console.log("let answers in submitAnswer:", answers, typeof answers)
     if (typeof answers !== 'object') {
       answers = {};
-      console.log(answers[answer])
+      //console.log(answers[answer])
       answers[answer] = 1;
       poll.answers.push(answers);
-      console.log(poll.answers)
+      console.log("This is poll.answers:", poll.answers, "and answers:", answers)
     }
-    else if (typeof answers[answer] === 'undefined')
+    else if (typeof answers[answer] === 'undefined') {
       answers[answer] = 1;
-    else
+      console.log("else if answers is undefined:", answers[answer])
+    }
+    else {
       answers[answer] += 1
+    }
     console.log("answers looks like ", answers, typeof answers);
   }
 }
