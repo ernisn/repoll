@@ -15,9 +15,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 
 Data.prototype.addQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
-  console.log("question added to", pollId, q);
+  
   if (typeof poll !== 'undefined') {
     poll.questions.push(q);
+    console.log("question added to", pollId, q);
   }
 }
 
@@ -30,6 +31,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.currentQuestion = 0;              
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
+    console.log("Poll:", pollId, "stored in", this.polls)
   }
   return this.polls[pollId];
 }
@@ -54,13 +56,14 @@ Data.prototype.getPoll = function(pollId) {
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
-  console.log("question requested for ", pollId, qId);
+  console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId]);
   if (typeof poll !== 'undefined') {
     if (qId !== null) {
       poll.currentQuestion = qId;
     }
     //Not sure what the code was even supposed to do before (the one that is commented out), properly displays on poll page now in ny case /Otto 17/06/22
     //return poll.questions[poll.currentQuestion];
+    console.log("getQuestion returns this:",poll.questions[0])
     return poll.questions[0];
   }
   return []
