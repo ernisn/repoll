@@ -18,7 +18,7 @@ Data.prototype.addQuestion = function(pollId, q) {
   
   if (typeof poll !== 'undefined') {
     poll.questions.push(q);
-    console.log("question added to", pollId, q);
+    console.log("question added to", pollId, q,"with question id:", poll.currentQuestion );
   }
 }
 
@@ -56,14 +56,15 @@ Data.prototype.getPoll = function(pollId) {
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
-  console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId]);
+  console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId-eval(1)]);
   if (typeof poll !== 'undefined') {
     if (qId !== null) {
       poll.currentQuestion = qId;
+      console.log("The polls currentQuestion is now:", poll.currentQuestion)
     }
     //Not sure what the code was even supposed to do before (the one that is commented out), properly displays on poll page now in ny case /Otto 17/06/22
     //return poll.questions[poll.currentQuestion];
-    console.log("getQuestion returns this:",poll.questions[0])
+    console.log("getQuestion returns this:",poll.questions[0],"But maybe it should return this?:", poll.questions[poll.currentQuestion-eval(1)])
     return poll.questions[0];
   }
   return []
