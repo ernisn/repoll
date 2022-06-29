@@ -15,7 +15,7 @@ function sockets(io, socket, data) {
 
   socket.on('addQuestion', function(d) {
     data.addQuestion(d.pollId, {q: d.q, a: d.a});
-    socket.emit('newQuestion', data.getQuestion(d.pollId, eval(d.questionNumber) + eval(1)))
+    socket.emit('newQuestion', data.getQuestion(d.pollId, eval(d.questionNumber))) // Why add 1 to the q-nr??
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
