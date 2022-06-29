@@ -1,8 +1,17 @@
 <template>
+
   <div>
     {{pollId}}
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
+  </div>
+  <div>
+    <button v-on:click="prevQuestion">
+      Prev
+    </button>
+    <button v-on:click="nextQuestion">
+      Next
+    </button>
   </div>
 </template>
 
@@ -16,7 +25,7 @@ export default {
   name: 'Poll',
   components: {
     Question
-  },
+},
   data: function () {
     return {
       question: {
@@ -32,10 +41,34 @@ export default {
     socket.on("newQuestion", q =>
       this.question = q
     )
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
   },
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
+    },
+    nextQuestion: function(){
+      console.log('Next button clicked')
+      //socket.emit("getNextQ", {pollId: this.pollId});
+    },
+    prevQuestion: function(){
+      //socket.emit("getPrevQ", {pollId: this.pollId});
+      //Resets "next question" button if it has previously been changed to say "View Results"
+      //document.getElementById("nextQuestionButton").innerHTML = 'Next Question';
+      //document.getElementById("nextQuestionButton").onclick = 'nextQuestion';
+      //this.isClicked = false;
+      console.log('Prev button clicked')
+    },
+    switchLanguage: function() {
+      if (this.lang === "en")
+        this.lang = "sv"
+      else
+        this.lang = "en"
+      socket.emit("switchLanguage", this.lang)
     }
   }
 }

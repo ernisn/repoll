@@ -1,8 +1,18 @@
 {
-	"sales-pitch": "Svar. Helt. Enkelt.",
+	"addAnswer": "Lägg till svarsalternativ",
+	"addQuestion": "Lägg till fråga",
+	"answerAlternatives": "Svarsalternativ",
+	"changeLanguage": "Change to English",
+	"createPoll": "Skapa Poll",
 	"invite": "Bjud in deltagare med den här länken:",
-	"createPoll": "Skapa röstning",
-	"participatePoll": "Delta i röstning",
+	"joinPoll": "Starta Poll",
+	"nextQuestion": "Nästa fråga",
+	"participatePoll": "Delta i poll",
+	"pollId": "Ange poll-id:",
+	"pollLink": "Pollänk: ",
+	"prevQuestion": "Föregående fråga",
 	"question": "Fråga",
-	"changeLanguage": "Change to English"
+	"results": "Se resultat",
+	"runQuestion": "Kör fråga",
+	"sales-pitch": "Svar. Helt. Enkelt."
 }

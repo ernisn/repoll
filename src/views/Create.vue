@@ -7,9 +7,9 @@
   </header>
 
   <ResponsiveNav v-bind:hideNav="hideNav">
-    <router-link v-bind:to="'/'">Join Poll</router-link>
+    <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <router-link v-bind:to="'/result/'+id">Poll Results</router-link>
+    <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
 
@@ -18,31 +18,37 @@
   </section>
 
   <div>
-    Poll link: 
-    <input type="text" v-model="pollId">
+    {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
+    <div id ="hideAfterCreate">
     <button v-on:click="createPoll">
-      Create poll
+      {{uiLabels.createPoll}}
     </button>
+    </div>
+
+    <div id ="hideBeforeCreate">
     <div>
-      {{uiLabels.question}}:
+      {{uiLabels.question}} <input type="number" v-model="questionNumber">:
       <input type="text" v-model="question">
       <div>
-        Answers:
-        <input v-for="(_, i) in answers" 
+        {{uiLabels.answerAlternatives}}<input id="answerAlternatives" v-for="(_, i) in answers" 
                v-model="answers[i]" 
                v-bind:key="'answer'+i">
+        <br>
         <button v-on:click="addAnswer">
-          Add answer alternative
+          {{uiLabels.addAnswer}}
         </button>
       </div>
     </div>
+    <br>
     <button v-on:click="addQuestion">
-      Add question
+      {{uiLabels.addQuestion}}
     </button>
-    <input type="number" v-model="questionNumber">
     <button v-on:click="runQuestion">
-      Run question
+      {{uiLabels.runQuestion}}
     </button>
+    </div>
+
+    <br>
     {{data}}
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
   </div>
@@ -83,16 +89,36 @@ export default {
   },
   methods: {
     createPoll: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      if(document.getElementById("pollIdEnter").value != "") {
+        var elementToDisplay = document.getElementById("hideBeforeCreate");
+        elementToDisplay.style.display = "block";
+        var elementToHide = document.getElementById("hideAfterCreate");
+        elementToHide.style.display = "none";
+        socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      }
+      else{
+        console.log("You must enter a poll id before creating poll")
+      }
     },
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, questionNumber: this.questionNumber} );
+      this.questionNumber +=1;
+      this.question = "";
+      this.answers = ['', ''];
     },
     addAnswer: function () {
       this.answers.push("");
     },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
+      console.log({pollId: this.pollId, questionNumber: this.questionNumber, q: this.question, a: this.answers})
+    },
+    switchLanguage: function() {
+      if (this.lang === "en")
+        this.lang = "sv"
+      else
+        this.lang = "en"
+      socket.emit("switchLanguage", this.lang)
     }
   }
 }
@@ -129,6 +155,10 @@ header {
   height: 2rem;
   cursor: pointer;
   font-size: 1.5rem;
+}
+
+#hideBeforeCreate {
+  display: none
 }
 
 @media screen and (max-width:50em) {
