@@ -42,8 +42,6 @@ export default {
     socket.on("newQuestion", q =>
       this.question = q
     )
-    this.lang = this.$route.params.lang;
-    socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
