@@ -50,7 +50,7 @@
 
     <br>
     {{data}}
-    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
+    <router-link v-bind:to="'/result/'+pollId">{{uiLabels.checkResults}}</router-link>
   </div>
 </template>
 
