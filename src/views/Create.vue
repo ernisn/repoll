@@ -81,7 +81,8 @@ export default {
       this.data = data
     )
     socket.on("pollCreated", (data) =>
-      this.data = data)
+      this.data = data
+    )
   },
   methods: {
     createPoll: function () {
