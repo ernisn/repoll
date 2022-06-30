@@ -55,8 +55,8 @@ export default {
 
     nextQuestion: function(qNr){
       //let qId = this.polls[this.pollId].currentQuestion;
-      console.log('Question number:', qNr)
-      socket.emit("getNextQuestion", {pollId: this.pollId, qNr});
+      console.log('Question number:', qNr, "\n pollId:", this.pollId, typeof this.pollId)
+      socket.emit("getNextQuestion", {pollId: this.pollId, qNr: qNr});
     },
 /*
     prevQuestion: function(){
