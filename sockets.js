@@ -19,6 +19,11 @@ function sockets(io, socket, data) {
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
+  socket.on("getNextQuestion", function(pollId){
+    var poll = data.getPoll(pollId);
+    console.log("getNextQ qId:", {poll})
+  })
+
   socket.on('joinPoll', function(pollId) {
     socket.join(pollId);
     socket.emit('newQuestion', data.getQuestion(pollId))

@@ -48,9 +48,11 @@ Data.prototype.getAnswers = function(pollId) {
 }
 Data.prototype.getPoll = function(pollId) {
   const poll = this.polls[pollId];
+  console.log("In getPoll - poll looks like:", {poll}, "with id:", pollId)
   if (typeof poll !== 'undefined') {
     return poll;
   }
+  console.log("getPoll --> polls:", this.polls)
   return {};
 }
 

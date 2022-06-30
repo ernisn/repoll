@@ -50,10 +50,13 @@ export default {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
     },
+
     nextQuestion: function(){
-      console.log('Next button clicked')
-      //socket.emit("getNextQ", {pollId: this.pollId});
+      //let qId = this.polls[this.pollId].currentQuestion;
+      console.log('Next button clicked, pollId:', this.pollId)
+      socket.emit("getNextQuestion", {pollId: this.pollId});
     },
+
     prevQuestion: function(){
       //socket.emit("getPrevQ", {pollId: this.pollId});
       //Resets "next question" button if it has previously been changed to say "View Results"
