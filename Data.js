@@ -52,7 +52,7 @@ Data.prototype.getPoll = function(pollId) {
   if (typeof poll !== 'undefined') {
     return poll;
   }
-  console.log("getPoll --> polls:", this.polls)
+  console.log("getPoll --> polls:", this.polls, "and this.polls[pollId]:", this.polls[pollId], "and this.polls.pollId:", this.polls.pollId)
   return {};
 }
 
