@@ -3,16 +3,18 @@
   <div>
     {{pollId}}
     <Question v-bind:question="question"
-              v-on:answer="submitAnswer"/>
+              v-on:answer="submitAnswer"
+              v-on:nextQuestion="nextQuestion"
+              />
   </div>
-  <div>
+  <!-- <div>
     <button v-on:click="prevQuestion">
       {{uiLabels.prevQuestion}}
     </button>
     <button v-on:click="nextQuestion">
       {{uiLabels.nextQuestion}}
     </button>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -51,12 +53,12 @@ export default {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
     },
 
-    nextQuestion: function(){
+    nextQuestion: function(qNr){
       //let qId = this.polls[this.pollId].currentQuestion;
       console.log('Next button clicked, pollId:', this.pollId)
-      socket.emit("getNextQuestion", {pollId: this.pollId});
+      socket.emit("getNextQuestion", {pollId: this.pollId, qNr});
     },
-
+/*
     prevQuestion: function(){
       //socket.emit("getPrevQ", {pollId: this.pollId});
       //Resets "next question" button if it has previously been changed to say "View Results"
@@ -65,6 +67,7 @@ export default {
       //this.isClicked = false;
       console.log('Prev button clicked')
     },
+    */
     switchLanguage: function() {
       if (this.lang === "en")
         this.lang = "sv"

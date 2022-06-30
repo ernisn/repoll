@@ -14,14 +14,14 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function(d) {
-    data.addQuestion(d.pollId, {q: d.q, a: d.a});
+    data.addQuestion(d.pollId, {q: d.q, a: d.a, qNr: d.questionNumber});
     socket.emit('newQuestion', data.getQuestion(d.pollId, eval(d.questionNumber)))
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
-  socket.on("getNextQuestion", function(pollId){
-    var poll = data.getPoll(pollId);
-    console.log("getNextQ qId:", {poll})
+  socket.on("getNextQuestion", function(pollId, qNr){
+    data.getQuestion(pollId, qNr);
+    console.log("getNextQ qId:", qNr)
   })
 
   socket.on('joinPoll', function(pollId) {
