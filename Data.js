@@ -54,7 +54,7 @@ Data.prototype.getPoll = function(pollId) {
   return {};
 }
 
-Data.prototype.getQuestion = function(pollId, qId=0) {
+Data.prototype.getQuestion = function(pollId, qId=0) { // changed qId=0 from =null, this got the submitAnswer func to work /Nils 30/06/22
   const poll = this.polls[pollId];
   console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId]);
   if (typeof poll !== 'undefined') {
@@ -74,7 +74,7 @@ Data.prototype.getUILabels = function (lang = "en") {
   const ui = require("./data/labels-" + lang + ".json");
   return ui;
 }
-
+// This func is a counter of the answers submitted in the poll 
 Data.prototype.submitAnswer = function(pollId, answer) {
   const poll = this.polls[pollId];
   console.log("answer submitted for ", pollId, answer);
