@@ -65,9 +65,9 @@ Data.prototype.getQuestion = function(pollId, qId=0) { // changed qId=0 from =nu
       console.log("The polls currentQuestion is now:", poll.currentQuestion)
     }
     //Not sure what the code was even supposed to do before (the one that is commented out), properly displays on poll page now in ny case /Otto 17/06/22
-    //return poll.questions[poll.currentQuestion];
-    console.log("getQuestion returns this:",poll.questions[0],"But maybe it should return this?:", poll.questions[poll.currentQuestion])
-    return poll.questions[0];
+    return poll.questions[poll.currentQuestion];
+    //console.log("getQuestion returns this:",poll.questions[0],"But maybe it should return this?:", poll.questions[poll.currentQuestion])
+    //return poll.questions[0];
   }
   return []
 }
