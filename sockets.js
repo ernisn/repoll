@@ -21,7 +21,7 @@ function sockets(io, socket, data) {
 
   socket.on("getNextQuestion", function(pollId, qNr){
     data.getQuestion(pollId, qNr);
-    console.log("getNextQ qId:", qNr)
+    console.log("getNextQ qId:", qNr, "\n pollId:", pollId)
   })
 
   socket.on('joinPoll', function(pollId) {
