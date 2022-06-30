@@ -54,7 +54,7 @@ Data.prototype.getPoll = function(pollId) {
   return {};
 }
 
-Data.prototype.getQuestion = function(pollId, qId=null) {
+Data.prototype.getQuestion = function(pollId, qId=0) {
   const poll = this.polls[pollId];
   console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId]);
   if (typeof poll !== 'undefined') {
@@ -98,6 +98,7 @@ Data.prototype.submitAnswer = function(pollId, answer) {
     }
     else {
       answers[answer] += 1
+      console.log("else --> + 1")
     }
     console.log("answers looks like ", answers, typeof answers);
   }
