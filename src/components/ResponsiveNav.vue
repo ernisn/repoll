@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
   nav {
-    background-color: lightgray;
+    background-color: lightpink;
     width:100%;
     height: 4em;
     display: grid;

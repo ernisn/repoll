@@ -5,6 +5,14 @@
     <a href="/"><h3>This is the repoll</h3> </a>
 
   </header>
+
+  <ResponsiveNav v-bind:hideNav="hideNav">
+    <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
+    <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
+    <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
+    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+  </ResponsiveNav>
+
 </section>
 </section>
 
