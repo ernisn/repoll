@@ -25,17 +25,11 @@ export default {
       console.log("Clicked on:", answer)
     },
     nextQuestion: function(qNr){
-      //let qId = this.polls[this.pollId].currentQuestion;
       console.log('Next button clicked in Question.vue,', "\n Question number:", qNr)
       this.$emit("nextQuestion", qNr);
     },
 
     prevQuestion: function(){
-      //socket.emit("getPrevQ", {pollId: this.pollId});
-      //Resets "next question" button if it has previously been changed to say "View Results"
-      //document.getElementById("nextQuestionButton").innerHTML = 'Next Question';
-      //document.getElementById("nextQuestionButton").onclick = 'nextQuestion';
-      //this.isClicked = false;
       console.log('Prev button clicked')
       //this.$emit("questionNumber", qNr);
     }, 
