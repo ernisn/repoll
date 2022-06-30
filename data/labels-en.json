@@ -15,5 +15,7 @@
 	"question": "Question",
 	"results": "Poll Results",
 	"runQuestion": "Run question",
-	"sales-pitch": "Simply. Great. Polling."
+	"sales-pitch": "Simply. Great. Polling.",
+	"noQuestion": "No current question",
+	"backToStart": "Back to startpage"
 }

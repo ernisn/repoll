@@ -1,7 +1,7 @@
 <template>
-<div class="wrapper">
+<div class="wrapperBars">
   <div class="bar" v-for="(item, key) in data" v-bind:key="key">
-    <div v-bind:style="{height: item + 'px'}">
+    <div v-bind:style="{height: item + '10px'}">
       <span> {{item}} </span>
     </div>
     <div> 
@@ -48,7 +48,7 @@ export default {
   background-color:yellow;
 }
 
-.wrapper {
+.wrapperBars {
   padding:3em;
 }
 </style>
