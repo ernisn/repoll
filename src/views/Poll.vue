@@ -55,7 +55,7 @@ export default {
 
     nextQuestion: function(qNr){
       //let qId = this.polls[this.pollId].currentQuestion;
-      console.log('Next button clicked, pollId:', this.pollId)
+      console.log('Question number:', qNr)
       socket.emit("getNextQuestion", {pollId: this.pollId, qNr});
     },
 /*

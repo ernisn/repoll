@@ -26,8 +26,8 @@ export default {
     },
     nextQuestion: function(qNr){
       //let qId = this.polls[this.pollId].currentQuestion;
-      console.log('Next button clicked,', "\n Question number:", qNr)
-      this.$emit("questionNumber", qNr);
+      console.log('Next button clicked in Question.vue,', "\n Question number:", qNr)
+      this.$emit("nextQuestion", qNr);
     },
 
     prevQuestion: function(){

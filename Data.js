@@ -58,7 +58,7 @@ Data.prototype.getPoll = function(pollId) {
 
 Data.prototype.getQuestion = function(pollId, qId=0) { // changed qId=0 from =null, this got the submitAnswer func to work /Nils 30/06/22
   const poll = this.polls[pollId];
-  console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId]);
+  console.log("question requested for ", pollId, qId,"which looks like:", poll);
   if (typeof poll !== 'undefined') {
     if (qId !== null) {
       poll.currentQuestion = qId;
