@@ -38,7 +38,7 @@ Does not work currently since result page crashes the server. -->
   </div>
 
   <main class="resultPage" v-if="!pollEmpty">
-    <section v-if="!end" class="showResult">
+    <section v-if="!end" class="showResults">
       <div v-if="isClicked && !end" class="theResultBars">
         <div class="clicked" v-if="isClicked"></div>
         <Bars v-if="result == 'Bars'" v-bind:data="data"></Bars>
@@ -92,7 +92,6 @@ import Bars from '@/components/Bars.vue';
 import io from 'socket.io-client';
 import Question from '../components/Question.vue';
 import Diagram from '../components/Diagram.vue';
-import { METHODS } from 'http';
 const socket = io();
 
 export default {
@@ -154,10 +153,60 @@ export default {
         this.pollEmpty = true;
       }
     });
+  },
+
+  methods: {
+    switchLanguage: function () {
+      if (this.lang === 'en')
+        this.lang = 'sv'
+      else
+        this.lang = 'en'
+      socket.emit("switchLanguage", this.lang)
+    },
+
+    nextQuestion: function () {
+      socket.emit("getNextQ", { pollID: this.pollId });
+      this.isClicked = false;
+    },
+
+    previousQuestion: function () {
+      socket.emit("getPrevQ", { pollId: this.pollId });
+      //Resets "next question" button if it has previously been changed to say "View Results"
+      document.getElementById("nextButton").innerHTML = 'Next Question';
+      document.getElementById("nextButton").onclick = 'nextQuestion';
+      this.isClicked = false;
+    },
+
+    
+
+    showTheResults: function () {
+      socket.emit("showResults", { pollId: this.pollId });
+      socket.on("sendPoll", function (d) {
+        let ans = d.answers;
+        let q = d.questions;
+        let i = 0;
+        q.forEach(element => {
+          console.log(element.q);
+          console.log(element.a);
+          console.log(ans[i]);
+          console.log(element.isCorrect);
+          for (var k = 0; k < element.isCorrect.length; k++) {
+            if ((element.isCorrect[k] == true)) {
+              console.log(k);
+              const correctBar = document.getElementsByClassName('bar')[k];
+              correctBar.style.color = "#33cc33";
+            }
+          }
+
+          i++;
+        });
+      })
+    },
+  },
+  mounted: function () {
+    this.$nextTick(this.showResults);
   }
 }
-
-
 
 </script>
 
