@@ -37,12 +37,14 @@
         <button v-on:click="addAnswer">
           {{uiLabels.addAnswer}}
         </button>
+        <button v-on:click="addQuestion">
+          {{uiLabels.addQuestion}}
+        </button>
       </div>
     </div>
+    
     <br>
-    <button v-on:click="addQuestion">
-      {{uiLabels.addQuestion}}
-    </button>
+
     <button v-on:click="runQuestion">
       {{uiLabels.runQuestion}}
     </button>
@@ -87,7 +89,8 @@ export default {
       this.data = data
     )
     socket.on("pollCreated", (data) =>
-      this.data = data)
+      this.data = data
+    )
   },
   methods: {
     createPoll: function () {
