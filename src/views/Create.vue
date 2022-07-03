@@ -46,11 +46,13 @@
     <button v-on:click="runQuestion">
       {{uiLabels.runQuestion}}
     </button>
+    <button v-on:click="joinPoll">
+      {{uiLabels.joinPoll}}
+    </button>
+    <button v-on:click="checkResults">
+      {{uiLabels.checkResults}}
+    </button>
     </div>
-
-    <br>
-    {{data}}
-    <router-link v-bind:to="'/result/'+pollId">{{uiLabels.checkResults}}</router-link>
   </div>
 </template>
 
@@ -119,7 +121,13 @@ export default {
       else
         this.lang = "en"
       socket.emit("switchLanguage", this.lang)
-    }
+    },
+    joinPoll: function () {
+          window.location.href = "#/poll/" + this.pollId;
+    },
+    checkResults: function () {
+          window.location.href = "#/results/" + this.pollId;
+    },
   }
 }
 </script>
