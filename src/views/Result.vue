@@ -176,9 +176,6 @@ export default {
       document.getElementById("nextButton").onclick = 'nextQuestion';
       this.isClicked = false;
     },
-
-    
-
     showTheResults: function () {
       socket.emit("showResults", { pollId: this.pollId });
       socket.on("sendPoll", function (d) {
