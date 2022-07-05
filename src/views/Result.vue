@@ -105,7 +105,6 @@ export default {
     return {
       question: "",
       pollEmpty: false,
-      question: "",
       uiLabels: {},
       isClicked: false,
       lastQuestion: false,
