@@ -129,7 +129,7 @@ export default {
           window.location.href = "#/poll/" + this.pollId;
     },
     checkResults: function () {
-          window.location.href = "#/results/" + this.pollId;
+          window.location.href = "#/result/" + this.pollId;
     },
   }
 }

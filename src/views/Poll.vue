@@ -40,11 +40,15 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
+    socket.on("finished", () => {
+      window.location.href = "#/result/" + this.pollId;
+    })
   },
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
       qID = qID + 1;
+      socket.emit('finishedCheck', {pollId: this.pollId, questionNumber: qID})
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: qID})
     },
     switchLanguage: function() {

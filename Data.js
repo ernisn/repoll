@@ -1,5 +1,7 @@
 'use strict';
 
+const sockets = require("./sockets");
+
 const languages = ["en", "se"];
 
 // Store data in an object to keep the global namespace clean

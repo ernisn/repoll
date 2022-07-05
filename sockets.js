@@ -39,6 +39,17 @@ function sockets(io, socket, data) {
     data = new Data();
     data.initializeData();
   })
+
+  socket.on('finishedCheck', function(d) {
+    if (data.getPoll(d.pollId).questions.length === d.questionNumber) {
+      console.log("The poll is finished!")
+      socket.emit('finished', data.getPoll(d.pollId));
+    }
+    else {
+      console.log("The poll is not finished! (", data.getPoll(d.pollId).questions.length, "!==", d.questionNumber, ")")
+    }
+  }
+  )
 }
 
 module.exports = sockets;
