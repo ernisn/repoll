@@ -5,14 +5,6 @@
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
-  <div>
-    <button v-on:click="prevQuestion">
-      {{uiLabels.prevQuestion}}
-    </button>
-    <button v-on:click="nextQuestion">
-      {{uiLabels.nextQuestion}}
-    </button>
-  </div>
 </template>
 
 <script>
@@ -21,6 +13,7 @@ import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
 
+//Counter for the question number /Otto 25/07/22
 var qID = 0;
 
 export default {
@@ -51,20 +44,8 @@ export default {
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
-    },
-    nextQuestion: function(){
-      console.log('Next button clicked')
       qID = qID + 1;
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: qID})
-      //socket.emit("getNextQ", {pollId: this.pollId});
-    },
-    prevQuestion: function(){
-      //socket.emit("getPrevQ", {pollId: this.pollId});
-      //Resets "next question" button if it has previously been changed to say "View Results"
-      //document.getElementById("nextQuestionButton").innerHTML = 'Next Question';
-      //document.getElementById("nextQuestionButton").onclick = 'nextQuestion';
-      //this.isClicked = false;
-      console.log('Prev button clicked')
     },
     switchLanguage: function() {
       if (this.lang === "en")
