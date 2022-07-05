@@ -21,6 +21,8 @@ import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
 
+var qID = 0;
+
 export default {
   name: 'Poll',
   components: {
@@ -52,6 +54,8 @@ export default {
     },
     nextQuestion: function(){
       console.log('Next button clicked')
+      qID = qID + 1;
+      socket.emit("runQuestion", {pollId: this.pollId, questionNumber: qID})
       //socket.emit("getNextQ", {pollId: this.pollId});
     },
     prevQuestion: function(){

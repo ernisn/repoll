@@ -36,6 +36,14 @@ Data.prototype.createPoll = function(pollId, lang="en") {
   return this.polls[pollId];
 }
 
+Data.prototype.nextQuestion = function(pollId){
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    poll.currentQuestion += 1;
+    console.log("The polls currentQuestion is now:", poll.currentQuestion)
+  }
+}
+
 Data.prototype.getAnswers = function(pollId) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
@@ -56,7 +64,7 @@ Data.prototype.getPoll = function(pollId) {
 
 Data.prototype.getQuestion = function(pollId, qId=0) { // changed qId=0 from =null, this got the submitAnswer func to work /Nils 30/06/22
   const poll = this.polls[pollId];
-  console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId]);
+  //console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId]);
   if (typeof poll !== 'undefined') {
     if (qId !== null) {
       poll.currentQuestion = qId;
@@ -65,7 +73,7 @@ Data.prototype.getQuestion = function(pollId, qId=0) { // changed qId=0 from =nu
     //Not sure what the code was even supposed to do before (the one that is commented out), properly displays on poll page now in ny case /Otto 17/06/22
     //return poll.questions[poll.currentQuestion];
     console.log("getQuestion returns this:",poll.questions[0],"But maybe it should return this?:", poll.questions[poll.currentQuestion])
-    return poll.questions[0];
+    return poll.questions[poll.currentQuestion];
   }
   return []
 }
