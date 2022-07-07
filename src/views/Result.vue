@@ -208,11 +208,11 @@ export default {
 
 <style scoped>
 .screen {
-  background-color: green;
+  background-color: white;
   ;
 }
 
 .backToStart {
-  background-color: brown;
+  background-color: white;
 }
 </style>

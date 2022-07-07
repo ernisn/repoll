@@ -6,7 +6,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: green;
+  background-color: white;
 
 }
 #app {

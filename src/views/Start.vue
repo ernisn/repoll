@@ -69,7 +69,7 @@ export default {
     grid-template-columns: 2em auto;
   }
   .MainScreen {
-    background-color: red;
+    background-color: black;
     
   }
   .logo {
@@ -85,7 +85,7 @@ export default {
     margin-right: 0.5rem; 
   }
   .hamburger {
-    color:green;
+    color:white;
     width:1em;
     display: flex;
     align-items: center;
@@ -102,7 +102,7 @@ export default {
   margin: auto;
   }
   #pollWindow {
-    background-color: greenyellow;
+    background-color: white;
   }
 
 @media screen and (max-width:50em) {
