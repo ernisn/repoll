@@ -15,5 +15,11 @@
 	"question": "Question",
 	"results": "Poll Results",
 	"runPoll": "Save and run this poll",
-	"sales-pitch": "Simply. Great. Polling."
+	"sales-pitch": "Simply. Great. Polling.",
+	"noQuestion": "No current question",
+	"backToStart": "Back to startpage",
+	"pollDone": "The poll is done",
+	"theCorrectAnswer": "The correct answer is",
+	"fromTop": "Check answers again from the top",
+	"lastQuestion": "Last question of the poll"
 }

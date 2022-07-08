@@ -13,6 +13,10 @@
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
 
+  <section class="screen">
+
+  </section>
+
   <div>
     {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
     <div id ="hideAfterCreate">
@@ -51,6 +55,10 @@
         {{uiLabels.checkResults}}
       </button>
     </div>
+
+    <br>
+    {{data}}
+    <router-link v-bind:to="'/result/'+pollId">{{uiLabels.checkResults}}</router-link>
   </div>
 </template>
 
@@ -85,7 +93,8 @@ export default {
       this.data = data
     )
     socket.on("pollCreated", (data) =>
-      this.data = data)
+      this.data = data
+    )
   },
   methods: {
     createPoll: function () {
@@ -126,10 +135,10 @@ export default {
       socket.emit("switchLanguage", this.lang)
     },
     joinPoll: function () {
-      window.location.href = "#/poll/" + this.pollId;
+          window.location.href = "#/poll/" + this.pollId;
     },
     checkResults: function () {
-      window.location.href = "#/result/" + this.pollId;
+          window.location.href = "#/result/" + this.pollId;
     },
   }
 }
@@ -137,7 +146,7 @@ export default {
 
 <style scoped>
 header {
-  background-color: gray;
+  background-color: black;
   width: 100%;
   display: grid;
   grid-template-columns: 2em auto;

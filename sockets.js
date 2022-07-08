@@ -41,14 +41,14 @@ function sockets(io, socket, data) {
   })
 
   socket.on('finishedCheck', function(d) {
-        if (data.getPoll(d.pollId).questions.length === d.questionNumber) {
-          console.log("The poll is finished!")
-          socket.emit('finished', data.getPoll(d.pollId));
-        }
-        else {
-          console.log("The poll is not finished! (", data.getPoll(d.pollId).questions.length, "!==", d.questionNumber, ")")
-        }
-      }
+    if (data.getPoll(d.pollId).questions.length === d.questionNumber) {
+      console.log("The poll is finished!")
+      socket.emit('finished', data.getPoll(d.pollId));
+    }
+    else {
+      console.log("The poll is not finished! (", data.getPoll(d.pollId).questions.length, "!==", d.questionNumber, ")")
+    }
+  }
   )
 }
 

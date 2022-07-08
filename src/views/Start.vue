@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="MainScreen">
     <div v-bind:class="['hamburger', {'close': !hideNav}]" 
          v-on:click="toggleNav">
     </div>
@@ -12,14 +12,15 @@
     <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
-
-  <div>
+  <div id="pollWindow">
+  <div class= "inputbox">
     {{uiLabels.pollId}} <input type="text" v-model="id"> 
     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
   </div>
-  
+  </div>
   <br>
-  <router-link v-bind:to="'/result/'+id" tag="button">{{uiLabels.results}}</router-link>
+  <!-- <router-link v-bind:to="'/result/'+id" tag="button">{{uiLabels.results}}</router-link> 
+  ##Commented this out cause I think it does not do anything/Allan 06/30/22 --> 
 </template>
 
 <script>
@@ -62,10 +63,14 @@ export default {
 
 <style scoped>
   header {
-    background-color: gray;
+    background-color: black;
     width: 100%;
     display: grid;
     grid-template-columns: 2em auto;
+  }
+  .MainScreen {
+    background-color: black;
+    
   }
   .logo {
     text-transform: uppercase;
@@ -91,6 +96,13 @@ export default {
     height: 2rem;
     cursor: pointer;
     font-size: 1.5rem;
+  }
+  .inputbox {
+  -ms-transform: translateY(-50%);
+  margin: auto;
+  }
+  #pollWindow {
+    background-color: white;
   }
 
 @media screen and (max-width:50em) {

@@ -15,5 +15,8 @@
 	"question": "Fråga",
 	"results": "Se resultat",
 	"runQuestion": "Kör fråga",
-	"sales-pitch": "Svar. Helt. Enkelt."
+	"sales-pitch": "Svar. Helt. Enkelt.",
+	"noQuestion" : "Ingen fråga",
+	"backToStart": "Tillbaka till startsidan",
+	"pollDone": "Pollen är över"
 }
