@@ -1,14 +1,14 @@
 <template>
-<p>{{question.q}}</p>
-<button v-for="a in question.a" v-on:click="answer(a)" v-bind:key="a">
-  {{ a }}
+<p>{{item.itemQuestion}}</p>
+<button v-for="answerId in item.itemAnswers" v-on:click="answer(answerId)" v-bind:key="answerId">
+  {{ answerId }}
 </button>
 </template>
 <script>
 export default {
   name: 'Bars',
   props: {
-    question: Object
+    item: Object
   },
   methods: {
     answer: function (answer) {

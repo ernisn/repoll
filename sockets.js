@@ -9,36 +9,47 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
-  socket.on('createPoll', function(d) {
-    socket.emit('pollCreated', data.createPoll(d.pollId, d.lang));
+  socket.on('createPoll', function(dataCreate) {
+    socket.emit('pollCreated', data.createPoll(dataCreate.pollId, dataCreate.lang));
   });
 
-  socket.on('addQuestion', function(d) {
-    data.addQuestion(d.pollId, {q: d.q, a: d.a});
-    socket.emit('newQuestion', data.getQuestion(d.pollId, eval(d.questionNumber)))
-    socket.emit('dataUpdate', data.getAnswers(d.pollId));
+  socket.on('addItem', function(dataAddI) {
+    data.addItem(dataAddI.pollId, dataAddI.itemId, dataAddI.itemQuestion, dataAddI.itemAnswers);
+    socket.emit('newQuestion', data.getQuestion(dataAddI.pollId, dataAddI.itemId))
+    socket.emit('dataUpdate', data.getAnswers(dataAddI.pollId, dataAddI.itemId));
   });
 
   socket.on('joinPoll', function(pollId) {
     socket.join(pollId);
-    socket.emit('newQuestion', data.getQuestion(pollId))
-    socket.emit('dataUpdate', data.getAnswers(pollId));
+    socket.emit('newQuestion', data.getQuestion(pollId, 0))
+    socket.emit('dataUpdate', data.getAnswers(pollId, 0));
   });
 
-  socket.on('runQuestion', function(d) {
-    io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
-    io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
+  socket.on('runPoll', function(dataRunQ) {
+    io.to(dataRunQ.pollId).emit('newQuestion', data.getQuestion(dataRunQ.pollId, dataRunQ.itemId));
+    io.to(dataRunQ.pollId).emit('dataUpdate', data.getAnswers(dataRunQ.pollId, dataRunQ.itemId));
   });
 
-  socket.on('submitAnswer', function(d) {
-    data.submitAnswer(d.pollId, d.answer);
-    io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
+  socket.on('submitAnswer', function(dataSubmitA) {
+    data.submitAnswer(dataSubmitA.pollId, dataSubmitA.answer);
+    io.to(dataSubmitA.pollId).emit('dataUpdate', data.getAnswers(dataSubmitA.pollId, dataSubmitA.itemId));
   });
 
   socket.on('resetAll', () => {
     data = new Data();
     data.initializeData();
   })
+
+  socket.on('finishedCheck', function(d) {
+        if (data.getPoll(d.pollId).questions.length === d.questionNumber) {
+          console.log("The poll is finished!")
+          socket.emit('finished', data.getPoll(d.pollId));
+        }
+        else {
+          console.log("The poll is not finished! (", data.getPoll(d.pollId).questions.length, "!==", d.questionNumber, ")")
+        }
+      }
+  )
 }
 
 module.exports = sockets;

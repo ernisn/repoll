@@ -1,10 +1,11 @@
 'use strict';
 
-const languages = ["en", "se"];
+const sockets = require("./sockets");
+// const languages = ["en", "se"];
 
 // Store data in an object to keep the global namespace clean
 function Data() {
-  this.polls = {};
+  this.allPolls = {};
 }
 
 /***********************************************
@@ -13,94 +14,110 @@ prototype of the Data object/class
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 ***********************************************/
 
-Data.prototype.addQuestion = function(pollId, q) {
-  const poll = this.polls[pollId];
-  
-  if (typeof poll !== 'undefined') {
-    poll.questions.push(q);
-    console.log("question added to", pollId, q,"with question id:", poll.currentQuestion );
-  }
+// Get language
+Data.prototype.getUILabels = function (lang = "en") {
+  return require("./data/labels-" + lang + ".json");
 }
 
+// Create a poll
 Data.prototype.createPoll = function(pollId, lang="en") {
-  if (typeof this.polls[pollId] === "undefined") {
-    let poll = {};
-    poll.lang = lang;  
-    poll.questions = [];
-    poll.answers = [];
-    poll.currentQuestion = 0;              
-    this.polls[pollId] = poll;
-    console.log("poll created", pollId, poll);
-    console.log("Poll:", pollId, "stored in", this.polls)
+  if (typeof this.allPolls.pollId === "undefined") {
+    let currentPoll = {};
+    currentPoll.lang = lang;
+    currentPoll.pollItems = [];
+    currentPoll.pollItems[0]= {
+      itemQuestion: '',
+      itemAnswers: []
+    };
+    // New structure, see /instruction.md
+    currentPoll.votersResponds = [[]];
+    this.allPolls.pollId = currentPoll;
+    console.log("poll created", pollId, currentPoll);
+    console.log("Poll:", pollId, "stored in", this.allPolls)
   }
-  return this.polls[pollId];
+  return this.allPolls.pollId;
 }
 
-Data.prototype.getAnswers = function(pollId) {
-  const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
-    const answers = poll.answers[poll.currentQuestion];
-    if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
-      return {q: poll.questions[poll.currentQuestion].q, a: answers};
+// Add poll content - Items
+Data.prototype.addItem = function(pollId, itemId, itemQuestion, itemAnswers) {
+  const currentPoll = this.allPolls.pollId;
+  currentPoll.pollItems.push({});
+  const currentItem = currentPoll.pollItems[itemId];
+  if (typeof currentPoll !== 'undefined') {
+    console.log(currentItem, itemQuestion)
+    currentItem.itemQuestion = itemQuestion;
+    // Only one question in an item
+    currentItem.itemAnswers = itemAnswers;
+    console.log("Question added to pollId:", pollId, ", item id:", itemId, ", question:", itemQuestion, ", answers:", itemAnswers)
+  }
+}
+// Add question to the item
+Data.prototype.getQuestion = function(pollId, itemId) {
+  const currentPoll = this.allPolls.pollId;
+  const currentItem = currentPoll.pollItems[itemId];
+  console.log("All the items in this poll:", currentPoll.pollItems);
+  if (typeof currentPoll !== 'undefined') {
+    console.log("Item requested for pollId", pollId, ". getQuestion returns this currentItem:", currentItem, "with itemId", itemId)
+    return currentItem;
+  }
+  return []
+}
+// Add answers to the item
+Data.prototype.getAnswers = function(pollId, itemId) {
+  const currentPoll = this.allPolls.pollId;
+  const currentItem = currentPoll.pollItems[itemId];
+  if (typeof currentPoll !== 'undefined') {
+    if (typeof currentItem !== 'undefined') {
+      return {itemQ: currentItem.itemQuestion, itemAs: currentItem.itemAnswers};
     }
   }
   return {}
 }
-Data.prototype.getPoll = function(pollId) {
-  const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
-    return poll;
+
+/*Data.prototype.getPoll = function(pollId) {
+  const currentPoll = this.allPolls.pollId;
+  if (typeof currentPoll !== 'undefined') {
+    return currentPoll;
   }
   return {};
-}
+}*/
 
-Data.prototype.getQuestion = function(pollId, qId=0) { // changed qId=0 from =null, this got the submitAnswer func to work /Nils 30/06/22
-  const poll = this.polls[pollId];
-  console.log("question requested for ", pollId, qId,"which looks like:", poll.questions[qId]);
-  if (typeof poll !== 'undefined') {
-    if (qId !== null) {
-      poll.currentQuestion = qId;
-      console.log("The polls currentQuestion is now:", poll.currentQuestion)
-    }
-    //Not sure what the code was even supposed to do before (the one that is commented out), properly displays on poll page now in ny case /Otto 17/06/22
-    //return poll.questions[poll.currentQuestion];
-    console.log("getQuestion returns this:",poll.questions[0],"But maybe it should return this?:", poll.questions[poll.currentQuestion])
-    return poll.questions[0];
-  }
-  return []
-}
-
-Data.prototype.getUILabels = function (lang = "en") {
-  const ui = require("./data/labels-" + lang + ".json");
-  return ui;
-}
-// This func is a counter of the answers submitted in the poll 
-Data.prototype.submitAnswer = function(pollId, answer) {
-  const poll = this.polls[pollId];
-  console.log("answer submitted for ", pollId, answer);
-  if (typeof poll !== 'undefined') {
-    let answers = poll.answers[poll.currentQuestion];
-    console.log("let answers in submitAnswer:", answers, typeof answers)
-    if (typeof answers !== 'object') {
-      answers = {};
-      answers[answer] = 1;
-      poll.answers.push(answers);
-      console.log("This is poll.answers:", poll.answers, "and answers:", answers, typeof answers, "\n --> answers[answer]=", answers[answer])
-      if (poll.answers.length > 1) {
-        answers = {};
-        answers[answer] = 2;
-        poll.answers.push(answers);
-      }
-    }
-    else if (typeof answers[answer] === 'undefined') {
-      answers[answer] = 1;
-      console.log("else if answers is undefined:", answers[answer])
+// Count the amount of answers submitted
+Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
+  const currentPoll = this.allPolls.pollId;
+  let currentItemsResponds = currentPoll.votersResponds[itemId]
+  // console.log("answer submitted for ", pollId, itemId, answerId);
+  if (typeof currentPoll !== 'undefined') {
+    console.log("let answers in submitAnswer:", currentItemsResponds, typeof currentItemsResponds)
+    /*  if (typeof currentItemsResponds !== 'object') {
+          currentItemsResponds = {};
+          currentItemsResponds[answerId] = 1;
+          currentPoll.votersResponds.push(currentAnswers);
+          console.log("This is poll.answers:", currentPoll.votersResponds, "and answers:", currentItemsResponds, typeof currentItemsResponds, "\n --> answers[answer]=", currentItemsResponds[answerId])
+          if (currentPoll.votersResponds.length > 1) {
+            currentItemsResponds = {};
+            currentItemsResponds[answerId] = 2;
+            currentPoll.votersResponds.push(currentAnswers);
+          }
+        }*/
+    if (typeof currentItemsResponds[answerId] === 'undefined') {
+      currentItemsResponds[answerId] = 1;
+      console.log("If answers is undefined then create and give 1:", currentItemsResponds[answerId])
     }
     else {
-      answers[answer] += 1
+      currentItemsResponds[answerId] += 1;
       console.log("else --> + 1")
     }
-    console.log("answers looks like ", answers, typeof answers);
+    console.log("The amounts of answers in this item:", currentItemsResponds,", Type:", typeof currentItemsResponds);
+  }
+}
+
+// Go to next item
+Data.prototype.nextQuestion = function(pollId, itemId){
+  const currentPoll = this.allPolls.pollId;
+  if (typeof currentPoll !== 'undefined') {
+    itemId += 1;
+    console.log("The polls current item is now:", itemId)
   }
 }
 

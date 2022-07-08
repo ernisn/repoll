@@ -23,30 +23,34 @@
 
     <div id ="hideBeforeCreate">
     <div>
-      {{uiLabels.question}} <input type="number" v-model="questionNumber">:
+      {{uiLabels.question}} <input type="number" v-model="itemId">:
       <input type="text" v-model="question">
       <div>
-        {{uiLabels.answerAlternatives}}<input id="answerAlternatives" v-for="(_, i) in answers" 
+        {{uiLabels.addAnswer}}<input id="addAnotherAnswer" v-for="(_, i) in answers"
                v-model="answers[i]" 
                v-bind:key="'answer'+i">
         <br>
-        <button v-on:click="addAnswer">
-          {{uiLabels.addAnswer}}
+        <button v-on:click="addAnotherAnswer">
+          {{uiLabels.addAnotherAnswer}}
+        </button>
+        <button v-on:click="addItem">
+          {{uiLabels.addItem}}
         </button>
       </div>
     </div>
-    <br>
-    <button v-on:click="addQuestion">
-      {{uiLabels.addQuestion}}
-    </button>
-    <button v-on:click="runQuestion">
-      {{uiLabels.runQuestion}}
-    </button>
-    </div>
 
     <br>
-    {{data}}
-    <router-link v-bind:to="'/result/'+pollId">{{uiLabels.checkResults}}</router-link>
+
+    <button v-on:click="runPoll">
+      {{uiLabels.runPoll}}
+    </button>
+      <button v-on:click="joinPoll">
+        {{uiLabels.joinPoll}}
+      </button>
+      <button v-on:click="checkResults">
+        {{uiLabels.checkResults}}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -66,7 +70,7 @@ export default {
       pollId: "",
       question: "",
       answers: ["", ""],
-      questionNumber: 0,
+      itemId: 0,
       data: {},
       uiLabels: {}
     }
@@ -96,18 +100,23 @@ export default {
         console.log("You must enter a poll id before creating poll")
       }
     },
-    addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, questionNumber: this.questionNumber} );
-      this.questionNumber +=1;
+    addItem: function () {
+      socket.emit("addItem", {
+        pollId: this.pollId,
+        itemId: this.itemId,
+        itemQuestion: this.question,
+        itemAnswers: this.answers
+      } );
+      this.itemId += 1;
       this.question = "";
       this.answers = ['', ''];
     },
-    addAnswer: function () {
+    addAnotherAnswer: function () {
       this.answers.push("");
     },
-    runQuestion: function () {
-      socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
-      console.log({pollId: this.pollId, questionNumber: this.questionNumber, q: this.question, a: this.answers})
+    runPoll: function () {
+      socket.emit("runPoll", {pollId: this.pollId, itemId: this.itemId})
+      console.log({pollId: this.pollId, itemId: this.itemId, itemQuestion: this.question, itemAnswers: this.answers})
     },
     switchLanguage: function() {
       if (this.lang === "en")
@@ -115,7 +124,13 @@ export default {
       else
         this.lang = "en"
       socket.emit("switchLanguage", this.lang)
-    }
+    },
+    joinPoll: function () {
+      window.location.href = "#/poll/" + this.pollId;
+    },
+    checkResults: function () {
+      window.location.href = "#/result/" + this.pollId;
+    },
   }
 }
 </script>
