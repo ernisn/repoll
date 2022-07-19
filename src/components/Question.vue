@@ -4,8 +4,8 @@
   {{ a }}
 </button>
 <div>
-  <p>{{question.qNr}}</p>
-    <button v-on:click="prevQuestion">
+  <p>{{question}}</p>
+    <button v-on:click="prevQuestion(questions)">
       Prev
     </button>
     <button v-on:click="nextQuestion(question.qNr)">
@@ -29,8 +29,9 @@ export default {
       this.$emit("nextQuestion", qNr);
     },
 
-    prevQuestion: function(){
+    prevQuestion: function(question){
       console.log('Prev button clicked')
+      console.log(question)
       //this.$emit("questionNumber", qNr);
     }, 
   }
