@@ -131,7 +131,9 @@ export default {
 
     socket.emit('joinPoll', this.pollId)
 
-
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
     socket.on("dataUpdate", (update) => {
       this.data = update.a;
       this.question = update.q;
