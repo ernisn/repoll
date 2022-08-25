@@ -1,8 +1,9 @@
 <template>
-
   <div>
-    pollid: {{pollId}}
-    <Question v-bind:question="question"
+    You are in the poll: {{pollId}}
+  </div>
+  <div>
+    <Question v-bind:item="item"
               v-on:answer="submitAnswer"/>
   </div>
 </template>
@@ -13,7 +14,7 @@ import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
 
-var itemId = 0;
+var questionNumber = 0;
 
 export default {
   name: 'Poll',
@@ -22,7 +23,7 @@ export default {
 },
   data: function () {
     return {
-      question: {
+      item: {
         itemQuestion: "",
         itemAnswers: []
       },
@@ -34,7 +35,7 @@ export default {
     this.pollId = this.$route.params.id
     socket.emit('joinPoll', this.pollId)
     socket.on("newQuestion", itemQuestion =>
-        this.question = itemQuestion
+        this.item = itemQuestion
     )
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -44,11 +45,11 @@ export default {
     })
   },
   methods: {
-    submitAnswer: function (answer) {
-      socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
-      itemId += 1;
-      socket.emit('finishedCheck', {pollId: this.pollId, itemId: itemId})
-      socket.emit("runQuestion", {pollId: this.pollId, itemId: itemId})
+    submitAnswer: function () {
+      socket.emit("submitAnswer", {pollId: this.pollId, itemId: this.itemId, answerId: this.answerId})
+      questionNumber += 1;
+      socket.emit('finishedCheck', {pollId: this.pollId, itemId: questionNumber})
+      socket.emit("runQuestion", {pollId: this.pollId, itemId: questionNumber})
     },
     switchLanguage: function() {
       if (this.lang === "en")

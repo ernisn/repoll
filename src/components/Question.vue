@@ -1,9 +1,15 @@
 <template>
-<p>{{item.itemQuestion}}</p>
-<button v-for="answerId in item.itemAnswers" v-on:click="answer(answerId)" v-bind:key="answerId">
-  {{ answerId }}
-</button>
+
+  <div>{{item.itemQuestion}}</div>
+
+  <button v-for="answerContent in item.itemAnswers"
+          v-on:click="clickAnswer(answerContent)"
+          v-bind:key="answerContent">
+    {{ answerContent }}
+  </button>
+
 </template>
+
 <script>
 export default {
   name: 'Bars',
@@ -11,10 +17,10 @@ export default {
     item: Object
   },
   methods: {
-    answer: function (answer) {
+    clickAnswer: function (answer) {
       this.$emit("answer", answer);
       console.log("Clicked on:", answer)
-    } 
+    }
   }
 }
 </script>

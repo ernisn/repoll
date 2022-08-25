@@ -31,7 +31,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('submitAnswer', function(dataSubmitA) {
-    data.submitAnswer(dataSubmitA.pollId, dataSubmitA.answer);
+    data.submitAnswer(dataSubmitA.pollId, dataSubmitA.itemId, dataSubmitA.answerId);
     io.to(dataSubmitA.pollId).emit('dataUpdate', data.getAnswers(dataSubmitA.pollId, dataSubmitA.itemId));
   });
 
@@ -40,13 +40,13 @@ function sockets(io, socket, data) {
     data.initializeData();
   })
 
-  socket.on('finishedCheck', function(d) {
-    if (data.getPoll(d.pollId).questions.length === d.questionNumber) {
+  socket.on('finishedCheck', function(dataFinishedCheck) {
+    if (data.getPoll(dataFinishedCheck.pollId).pollItems.length === dataFinishedCheck.itemId) {
       console.log("The poll is finished!")
-      socket.emit('finished', data.getPoll(d.pollId));
+      socket.emit('finished', data.getPoll(dataFinishedCheck.pollId));
     }
     else {
-      console.log("The poll is not finished! (", data.getPoll(d.pollId).questions.length, "!==", d.questionNumber, ")")
+      console.log("The poll is not finished! (", data.getPoll(dataFinishedCheck.pollId).pollItems.length, "!==", dataFinishedCheck.itemId, ")")
     }
   }
   )

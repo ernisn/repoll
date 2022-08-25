@@ -27,12 +27,12 @@
 
     <div id ="hideBeforeCreate">
     <div>
-      {{uiLabels.question}} <input type="number" v-model="itemId">:
+      {{uiLabels.question}} <input type="number" v-model.number="itemId">:
       <input type="text" v-model="question">
       <div>
         {{uiLabels.addAnswer}}<input id="addAnotherAnswer" v-for="(_, i) in answers"
                v-model="answers[i]" 
-               v-bind:key="'answer'+i">
+               v-bind:key="'answer'+ i">
         <br>
         <button v-on:click="addAnotherAnswer">
           {{uiLabels.addAnotherAnswer}}
