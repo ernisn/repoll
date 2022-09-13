@@ -1,10 +1,10 @@
 <template>
   <div>
-    You are in the poll: {{pollId}}
+    You are answering the poll: {{ pollId }}
   </div>
   <div>
     <Question v-bind:item="item"
-              v-on:answer="submitAnswer"/>
+              v-on:answer-clicked="submitAnswer(answerId)"/>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ export default {
   data: function () {
     return {
       item: {
+        itemId:"",
         itemQuestion: "",
         itemAnswers: []
       },
@@ -34,7 +35,7 @@ export default {
   created: function () {
     this.pollId = this.$route.params.id
     socket.emit('joinPoll', this.pollId)
-    socket.on("newQuestion", itemQuestion =>
+    socket.on("newQuestion", (itemQuestion) =>
         this.item = itemQuestion
     )
     socket.on("init", (labels) => {
@@ -43,10 +44,14 @@ export default {
     socket.on("finished", () => {
       window.location.href = "#/result/" + this.pollId;
     })
+/*    socket.on("answerClicked", (answerId) => {
+      this.answerId = answerId;
+      console.log("answerId received:", answerId)
+    })*/
   },
   methods: {
-    submitAnswer: function () {
-      socket.emit("submitAnswer", {pollId: this.pollId, itemId: this.itemId, answerId: this.answerId})
+    submitAnswer: function (answerId) {
+      socket.emit("submitAnswer", {pollId: this.pollId, itemId: questionNumber, answerId: answerId})
       questionNumber += 1;
       socket.emit('finishedCheck', {pollId: this.pollId, itemId: questionNumber})
       socket.emit("runQuestion", {pollId: this.pollId, itemId: questionNumber})

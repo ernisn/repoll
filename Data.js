@@ -96,12 +96,12 @@ Data.prototype.getUILabels = function (lang = "en") {
 // Count the amount of answers submitted
 Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
   const currentPoll = this.allPolls.pollId;
-  console.log("votersResponds:", currentPoll.votersResponds, itemId, answerId);
+  console.log("votersResponds:", currentPoll.votersResponds, "itemId:", itemId, "answerId:", answerId);
   let currentItemsResponds = currentPoll.votersResponds[itemId]
   // console.log("answer submitted for ", pollId, itemId, answerId);
   if (typeof currentPoll !== 'undefined') {
-    console.log("let answers in submitAnswer:", currentItemsResponds, typeof currentItemsResponds)
-    /*  if (typeof currentItemsResponds !== 'object') {
+    /*console.log("let answers in submitAnswer:", currentItemsResponds, typeof currentItemsResponds)
+      if (typeof currentItemsResponds !== 'object') {
           currentItemsResponds = {};
           currentItemsResponds[answerId] = 1;
           currentPoll.votersResponds.push(currentAnswers);
@@ -111,7 +111,7 @@ Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
             currentItemsResponds[answerId] = 2;
             currentPoll.votersResponds.push(currentAnswers);
           }
-        }*/
+        }
     if (typeof currentItemsResponds[answerId] === 'undefined') {
       currentItemsResponds[answerId] = 1;
       console.log("If answers is undefined then create and give 1:", currentItemsResponds[answerId])
@@ -119,8 +119,9 @@ Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
     else {
       currentItemsResponds[answerId] += 1;
       console.log("else --> + 1")
-    }
-    console.log("The amounts of answers in this item:", currentItemsResponds,", Type:", typeof currentItemsResponds);
+    }*/
+    currentItemsResponds[answerId] += 1;
+    console.log("The amounts of each answer in this item:", currentItemsResponds);
   }
 }
 

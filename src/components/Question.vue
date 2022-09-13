@@ -1,11 +1,12 @@
 <template>
 
-  <div>{{item.itemQuestion}}</div>
+  <div>Question: {{item.itemQuestion}}</div>
+  <div>Choose your answer:</div>
 
-  <button v-for="answerContent in item.itemAnswers"
-          v-on:click="clickAnswer(answerContent)"
+  <button v-for="(answerContent, answerId) in item.itemAnswers"
+          v-on:click="$emit('answer-clicked',answerId), console.log('Clicked on answer with answerId:', this.answerId)"
           v-bind:key="answerContent">
-    {{ answerContent }}
+    Answer {{ answerId }}: {{ answerContent }}
   </button>
 
 </template>
@@ -16,11 +17,17 @@ export default {
   props: {
     item: Object
   },
-  methods: {
-    clickAnswer: function (answer) {
-      this.$emit("answer", answer);
-      console.log("Clicked on:", answer)
+  data: function () {
+    return {
+      answerId: 0
     }
-  }
+  }/*,
+  methods: {
+    clickAnswer: function (answerId) {
+      console.log("Clicked on answer with answerId:", this.answerId);
+      this.answerId = answerId;
+      this.$emit("answer-clicked", this.answerId);
+    }
+  }*/
 }
 </script>
