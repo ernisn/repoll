@@ -11,6 +11,7 @@
 // @ is an alias to /src
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
+import '../Assets/Main.css'
 const socket = io();
 
 //Counter for the question number /Otto 25/07/22
@@ -61,3 +62,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  /*
+    see file '../assets/css/main.css';
+  */
+</style>

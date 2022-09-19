@@ -92,6 +92,7 @@ import Bars from '@/components/Bars.vue';
 import io from 'socket.io-client';
 import Question from '../components/Question.vue';
 import Diagram from '../components/Diagram.vue';
+import '../Assets/Main.css'
 const socket = io();
 
 export default {
@@ -208,13 +209,8 @@ export default {
 
 </script>
 
-<style scoped>
-.screen {
-  background-color: white;
-  ;
-}
-
-.backToStart {
-  background-color: white;
-}
+<style>
+  /*
+    see file '../assets/css/main.css';
+  */
 </style>
