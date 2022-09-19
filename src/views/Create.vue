@@ -1,8 +1,5 @@
 <template>
-  <header>
-    <div v-bind:class="['hamburger', {'close': !hideNav}]"
-         v-on:click="toggleNav">
-    </div>
+  <header class= 'MainScreen'>
     <div class="logo"><img src="/img/logo.png">rePoll</div>
   </header>
 
@@ -12,10 +9,6 @@
     <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
-
-  <section class="screen">
-    
-  </section>
 
   <div>
     {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
