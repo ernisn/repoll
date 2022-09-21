@@ -6,7 +6,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: black;
+  background-color: white;
 
 }
 #app {
@@ -18,7 +18,7 @@ body {
 }
 #nav {
   padding: 25px;
-  background-color: green;
+  background-color: white;
   color: white;
 }
 #nav a {
@@ -26,6 +26,7 @@ body {
   font-weight: bold;
   background-color: white;
   color: white;
+  border-radius: 10px;
 }
 #nav a.router-link-exact-active {
   background-color: green;
