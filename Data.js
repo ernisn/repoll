@@ -102,6 +102,16 @@ Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
   else {
     currentPoll.votersResponds.push([]);
   }
+  //Remove empty arrays at the end
+  if (currentPoll.votersResponds.length > 2){
+    let len = currentPoll.votersResponds.length, i;
+    let emptyArrayNum = 0;
+    for(i = 0; i < len; i++ )
+      if (currentPoll.votersResponds[i].length === 0)
+        emptyArrayNum += 1 ;
+    currentPoll.votersResponds = currentPoll.votersResponds.slice(0, len - emptyArrayNum + 1);
+  }
+
   console.log("Previous voters responds of this item:", currentPoll.votersResponds[itemId], "itemId:", itemId);
   console.log("This answer ID was chosen:", answerId);
   let currentItemsResponds = currentPoll.votersResponds[itemId];
