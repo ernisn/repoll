@@ -1,9 +1,10 @@
 <template>
-
   <div>
-    {{pollId}}
-    <Question v-bind:question="question"
-              v-on:answer="submitAnswer"/>
+    You are answering the poll: {{ pollId }}
+  </div>
+  <div>
+    <Question v-bind:item="item"
+              v-on:answer-clicked="submitAnswer($event)"/>
   </div>
 </template>
 
@@ -12,9 +13,7 @@
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
-
-//Counter for the question number /Otto 25/07/22
-var qID = 0;
+var currentItemNum = 0;
 
 export default {
   name: 'Poll',
@@ -23,19 +22,21 @@ export default {
 },
   data: function () {
     return {
-      question: {
-        q: "",
-        a: []
+      item: {
+        itemId:"",
+        itemQuestion: "",
+        itemAnswers: []
       },
-      pollId: "inactive poll",
+      pollId: "",
+      currentItemNum: 0,
       uiLabels: {}
     }
   },
   created: function () {
     this.pollId = this.$route.params.id
     socket.emit('joinPoll', this.pollId)
-    socket.on("newQuestion", q =>
-      this.question = q
+    socket.on("newQuestion", (itemQuestion) =>
+        this.item = itemQuestion
     )
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -43,13 +44,17 @@ export default {
     socket.on("finished", () => {
       window.location.href = "#/result/" + this.pollId;
     })
+/*    socket.on("answerClicked", (answerId) => {
+      this.answerId = answerId;
+      console.log("answerId received:", answerId)
+    })*/
   },
   methods: {
-    submitAnswer: function (answer) {
-      socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
-      qID = qID + 1;
-      socket.emit('finishedCheck', {pollId: this.pollId, questionNumber: qID})
-      socket.emit("runQuestion", {pollId: this.pollId, questionNumber: qID})
+    submitAnswer: function (answerId) {
+      socket.emit("submitAnswer", {pollId: this.pollId, itemId: currentItemNum, answerId: answerId})
+      socket.emit('finishedCheck', {pollId: this.pollId, itemId: currentItemNum})
+      currentItemNum += 1
+      socket.emit("runQuestion", {pollId: this.pollId, itemId: currentItemNum})
     },
     switchLanguage: function() {
       if (this.lang === "en")

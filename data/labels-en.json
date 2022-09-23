@@ -1,7 +1,7 @@
 {
 	"addAnswer": "Add answer alternative",
-	"addQuestion": "Add question above to poll",
-	"answerAlternatives": "Answer alternatives: ",
+	"addItem": "Add question above to poll",
+	"addAnotherAnswer": "Add another answer",
 	"changeLanguage": "Byt till svenska",
 	"checkResults": "Check result",
 	"createPoll": "Create poll",
@@ -14,7 +14,7 @@
 	"prevQuestion": "Previous Question",
 	"question": "Question",
 	"results": "Poll Results",
-	"runQuestion": "Run question",
+	"runPoll": "Save and run this poll",
 	"sales-pitch": "Simply. Great. Polling.",
 	"noQuestion": "No current question",
 	"backToStart": "Back to startpage",
