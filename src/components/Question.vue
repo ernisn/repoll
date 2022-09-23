@@ -3,17 +3,18 @@
   <div>Question: {{item.itemQuestion}}</div>
   <div>Choose your answer:</div>
 
-  <button v-for="(answerContent, answerId) in item.itemAnswers"
-          v-on:click="$emit('answer-clicked',answerId), console.log('Clicked on answer with answerId:', this.answerId)"
-          v-bind:key="answerContent">
-    Answer {{ answerId }}: {{ answerContent }}
-  </button>
+  <div v-for="(answerContent, answerId) in item.itemAnswers"
+       v-bind:key="answerContent">
+    <button v-on:click="clickAnswer(answerId)">
+      Answer {{ answerId }}: {{ answerContent }}
+    </button>
+  </div>
 
 </template>
 
 <script>
 export default {
-  name: 'Bars',
+  name: 'Question',
   props: {
     item: Object
   },
@@ -21,13 +22,12 @@ export default {
     return {
       answerId: 0
     }
-  }/*,
+  },
   methods: {
     clickAnswer: function (answerId) {
-      console.log("Clicked on answer with answerId:", this.answerId);
-      this.answerId = answerId;
-      this.$emit("answer-clicked", this.answerId);
+      this.$emit("answer-clicked", answerId);
+      console.log("Clicked on answer with answerId:", answerId);
     }
-  }*/
+  }
 }
 </script>

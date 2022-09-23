@@ -4,7 +4,7 @@
   </div>
   <div>
     <Question v-bind:item="item"
-              v-on:answer-clicked="submitAnswer(answerId)"/>
+              v-on:answer-clicked="submitAnswer($event)"/>
   </div>
 </template>
 
@@ -13,8 +13,7 @@
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
-
-var questionNumber = 0;
+var currentItemNum = 0;
 
 export default {
   name: 'Poll',
@@ -29,6 +28,7 @@ export default {
         itemAnswers: []
       },
       pollId: "",
+      currentItemNum: 0,
       uiLabels: {}
     }
   },
@@ -51,10 +51,10 @@ export default {
   },
   methods: {
     submitAnswer: function (answerId) {
-      socket.emit("submitAnswer", {pollId: this.pollId, itemId: questionNumber, answerId: answerId})
-      questionNumber += 1;
-      socket.emit('finishedCheck', {pollId: this.pollId, itemId: questionNumber})
-      socket.emit("runQuestion", {pollId: this.pollId, itemId: questionNumber})
+      socket.emit("submitAnswer", {pollId: this.pollId, itemId: currentItemNum, answerId: answerId})
+      socket.emit('finishedCheck', {pollId: this.pollId, itemId: currentItemNum})
+      currentItemNum += 1
+      socket.emit("runQuestion", {pollId: this.pollId, itemId: currentItemNum})
     },
     switchLanguage: function() {
       if (this.lang === "en")

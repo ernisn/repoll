@@ -25,7 +25,7 @@ function sockets(io, socket, data) {
     socket.emit('dataUpdate', data.getAnswers(pollId, 0));
   });
 
-  socket.on('runPoll', function(dataRunQ) {
+  socket.on('runQuestion', function(dataRunQ) {
     io.to(dataRunQ.pollId).emit('newQuestion', data.getQuestion(dataRunQ.pollId, dataRunQ.itemId));
     io.to(dataRunQ.pollId).emit('dataUpdate', data.getAnswers(dataRunQ.pollId, dataRunQ.itemId));
   });

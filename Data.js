@@ -17,7 +17,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 // Add poll content - Items
 Data.prototype.addItem = function(pollId, itemId, itemQuestion, itemAnswers) {
   const currentPoll = this.allPolls.pollId;
-  currentPoll.pollItems.push({});
+  if (typeof currentPoll.pollItems === 'undefined') {
+    currentPoll.pollItems = {};
+  }
+  else {
+    currentPoll.pollItems.push({});
+  }
   const currentItem = currentPoll.pollItems[itemId];
   if (typeof currentPoll !== 'undefined') {
     console.log(currentItem, itemQuestion)
@@ -39,7 +44,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
       itemAnswers: []
     };
     // New structure, see /instruction.md
-    currentPoll.votersResponds = [[0, 0]];
+    currentPoll.votersResponds = [[]];
     this.allPolls.pollId = currentPoll;
     console.log("poll created", pollId, currentPoll);
     console.log("Poll:", pollId, "stored in", this.allPolls)
@@ -96,8 +101,15 @@ Data.prototype.getUILabels = function (lang = "en") {
 // Count the amount of answers submitted
 Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
   const currentPoll = this.allPolls.pollId;
-  console.log("votersResponds:", currentPoll.votersResponds, "itemId:", itemId, "answerId:", answerId);
-  let currentItemsResponds = currentPoll.votersResponds[itemId]
+  if (typeof currentPoll.votersResponds === 'undefined') {
+    currentPoll.votersResponds = [[]];
+  }
+  else {
+    currentPoll.votersResponds.push([]);
+  }
+  console.log("Previous voters responds of this item:", currentPoll.votersResponds[itemId], "itemId:", itemId);
+  console.log("This answer ID was chosen:", answerId);
+  let currentItemsResponds = currentPoll.votersResponds[itemId];
   // console.log("answer submitted for ", pollId, itemId, answerId);
   if (typeof currentPoll !== 'undefined') {
     /*console.log("let answers in submitAnswer:", currentItemsResponds, typeof currentItemsResponds)
@@ -120,8 +132,14 @@ Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
       currentItemsResponds[answerId] += 1;
       console.log("else --> + 1")
     }*/
-    currentItemsResponds[answerId] += 1;
-    console.log("The amounts of each answer in this item:", currentItemsResponds);
+    if (typeof currentItemsResponds[answerId] === 'undefined') {
+      currentItemsResponds[answerId] = 1;
+    }
+    else {
+      currentItemsResponds[answerId] += 1;
+    }
+    console.log("The amounts of each answer in this item now:", currentItemsResponds);
+    console.log("The amounts of each answer in this item now:", currentItemsResponds);
   }
 }
 
