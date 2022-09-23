@@ -17,7 +17,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 
 Data.prototype.addQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
-  
   if (typeof poll !== 'undefined') {
     poll.questions.push(q);
     console.log("question added to", pollId, q,"with question id:", poll.currentQuestion );

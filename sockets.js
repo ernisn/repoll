@@ -48,8 +48,40 @@ function sockets(io, socket, data) {
     else {
       console.log("The poll is not finished! (", data.getPoll(d.pollId).questions.length, "!==", d.questionNumber, ")")
     }
-  }
-  )
+  })
+
+  let i = 0;
+  socket.on('getNextQ', function(d) {
+    var thisPoll = data.getPoll(d.pollId);
+    var thisPollLength = thisPoll.questions.length;
+    if (eval(i) + eval(1) < eval(thisPollLength)){
+      try{
+        i += 1;
+        socket.emit('newQuestion', data.getQuestion(d.pollId, i));
+      }
+      catch(err){
+        console.log("Next question failed");
+      }
+    }
+    else{
+      socket.emit("redirectResults");
+
+    }
+
+  });
+
+  socket.on('getPrevQ', function(d) {
+    console.log("Previous question button clicked");
+    if(i>0){
+      i -= 1;
+      socket.emit('newQuestion', data.getQuestion(d.pollId, i));
+      console.log("Moved to previous question");
+    }
+  });
+
+
 }
+
+
 
 module.exports = sockets;
