@@ -17,12 +17,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 // Add poll content - Items
 Data.prototype.addItem = function(pollId, itemId, itemQuestion, itemAnswers) {
   const currentPoll = this.allPolls.pollId;
-  if (typeof currentPoll.pollItems === 'undefined') {
-    currentPoll.pollItems = {};
-  }
-  else {
-    currentPoll.pollItems.push({});
-  }
+  currentPoll.pollItems.push({});
   const currentItem = currentPoll.pollItems[itemId];
   if (typeof currentPoll !== 'undefined') {
     console.log(currentItem, itemQuestion)
@@ -139,7 +134,7 @@ Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
       currentItemsResponds[answerId] += 1;
     }
     console.log("The amounts of each answer in this item now:", currentItemsResponds);
-    console.log("The amounts of each answer in this item now:", currentItemsResponds);
+    console.log("All voters responds:", currentPoll.votersResponds);
   }
 }
 

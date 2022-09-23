@@ -41,12 +41,17 @@ function sockets(io, socket, data) {
   })
 
   socket.on('finishedCheck', function(dataFinishedCheck) {
-    if (data.getPoll(dataFinishedCheck.pollId).pollItems.length === dataFinishedCheck.itemId) {
+    let howManyLeft = data.getPoll(dataFinishedCheck.pollId).pollItems.length - dataFinishedCheck.itemId;
+    if ( howManyLeft === 2) {
       console.log("The poll is finished!")
       socket.emit('finished', data.getPoll(dataFinishedCheck.pollId));
     }
     else {
-      console.log("The poll is not finished! (", data.getPoll(dataFinishedCheck.pollId).pollItems.length, "!==", dataFinishedCheck.itemId, ")")
+      console.log("The poll is not finished, current item has item ID:",
+          dataFinishedCheck.itemId,
+          ", but the poll has",
+          data.getPoll(dataFinishedCheck.pollId).pollItems.length - 1,
+          "items in total.")
     }
   }
   )
