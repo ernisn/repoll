@@ -10,7 +10,7 @@
     <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
-    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+    <button class = "langButton" v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
 
   <section class="screen">
@@ -201,5 +201,11 @@ header {
 
 .MainScreen {
   background-color: green;
+}
+
+.langButton {
+  color: white;
+  background-color: greenyellow;
+  border-radius: 2em;
 }
 </style>
