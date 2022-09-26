@@ -18,7 +18,7 @@
   </section>
 
   <div>
-    {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
+    {{uiLabels.pollLink}}<input  class = "pollLink" type="text" v-model="pollId" id="pollIdEnter">
     <div id ="hideAfterCreate">
     <button v-on:click="createPoll">
       {{uiLabels.createPoll}}
@@ -207,5 +207,23 @@ header {
   color: white;
   background-color: greenyellow;
   border-radius: 2em;
+}
+
+.pollLink {
+  color: black;
+  justify-content: center;
+}
+
+#pollIdEnter {
+  height: 4em;
+  width: 100%;
+  display: grid;
+  border-color: yellow;
+  border-radius: 2em;
+  border-bottom: 2px;
+  border: 2em;
+  color: black;
+  -ms-transform: translateY(-50%);
+  margin: auto;
 }
 </style>
