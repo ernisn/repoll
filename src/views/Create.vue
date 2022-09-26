@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class = "MainScreen">
     <div v-bind:class="['hamburger', {'close': !hideNav}]"
          v-on:click="toggleNav">
     </div>
@@ -197,5 +197,9 @@ header {
   .hide {
     left:-12em;
   }
+}
+
+.MainScreen {
+  background-color: green;
 }
 </style>

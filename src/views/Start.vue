@@ -10,12 +10,12 @@
     <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
-    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+    <button class = "langButton" v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
   <div id="pollWindow">
   <div class= "inputbox">
-    {{uiLabels.pollId}} <input type="text" v-model="id"> 
-    <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
+    {{uiLabels.pollId}} <input class = "pollID" type="text" v-model="id"> 
+    <router-link class = "participate" v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
   </div>
   </div>
   <br>
@@ -69,7 +69,7 @@ export default {
     grid-template-columns: 2em auto;
   }
   .MainScreen {
-    background-color: black;
+    background-color: darkgreen;
     
   }
   .logo {
@@ -98,9 +98,18 @@ export default {
     font-size: 1.5rem;
   }
   .inputbox {
-  -ms-transform: translateY(-50%);
-  margin: auto;
+    height: 4em;
+    width: 100%;
+    display: grid;
+    border-color: yellow;
+    border-radius: 2em;
+    border-bottom: 2px;
+    border: 2em;
+    color: black;
+    -ms-transform: translateY(-50%);
+    margin: auto;
   }
+
   #pollWindow {
     background-color: white;
   }
@@ -121,5 +130,20 @@ export default {
   .hide {
     left:-12em;
   }
+}
+
+.langButton {
+  color: white;
+  background-color: greenyellow;
+  border-radius: 2em;
+}
+
+.pollID {
+  color: green;
+}
+
+.participate {
+  color: black;
+  
 }
 </style>

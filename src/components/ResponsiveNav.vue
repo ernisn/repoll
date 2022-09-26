@@ -17,11 +17,12 @@ export default {
 
 <style scoped>
   nav {
-    background-color: darkgray;
+    background-color: white;
     width:100%;
     height: 4em;
     display: grid;
     grid-template-columns: repeat(auto-fit, 10em);
+    justify-content: center;
   }
 
   nav ::v-slotted(a) {
@@ -29,15 +30,18 @@ export default {
     font-size: 0.8rem;
     letter-spacing: 0.1em;
     text-decoration: none;
-    color: gray;
+    color: white;
     display: grid;
     align-items: center;
     justify-content: center;
+    background-color: green;
+    border-radius: 1em;
+    border: 2em;
   }
 
   nav ::v-slotted(a).is-active, nav ::v-slotted(a):hover {
-    background: #dadada;
-    border-bottom: 3px solid black;
+    background: lightgreen;
+    border-bottom: 2px solid black;
   }
 
 @media screen and (max-width:50em) {
@@ -59,7 +63,7 @@ export default {
 
   nav ::v-slotted(a).is-active, nav ::v-slotted(a):hover {
     color: white;
-    background: #3f3f3f;
+    background: white;
     border-bottom: none;
   }
 
