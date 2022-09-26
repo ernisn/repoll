@@ -1,5 +1,5 @@
 <template>
-  <header class= 'MainScreen'>
+  <header class= "MainScreen">
     <div v-bind:class="['hamburger', {'close': !hideNav}]" 
          v-on:click="toggleNav">
     </div>
