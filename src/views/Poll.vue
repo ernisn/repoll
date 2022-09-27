@@ -12,6 +12,8 @@
 // @ is an alias to /src
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
+import '../components/Assets/Main.css'; 
+
 const socket = io();
 var currentItemNum = 0;
 

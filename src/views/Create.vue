@@ -67,6 +67,8 @@
 <script>
 import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
+import '../components/Assets/Main.css'; 
+
 const socket = io();
 
 export default {
@@ -147,99 +149,5 @@ export default {
 </script>
 
 <style scoped>
-header {
-  background-color: black;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 2em auto;
-}
 
-.logo {
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  font-size: 2.5rem;
-  color: white;
-  padding-top: 0.2em;
-}
-
-.logo img {
-  height: 2.5rem;
-  vertical-align: bottom;
-  margin-right: 0.5rem;
-}
-
-.hamburger {
-  color: white;
-  width: 1em;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  padding: 0.5rem;
-  top: 0;
-  left: 0;
-  height: 2rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
-
-#hideBeforeCreate {
-  display: none
-}
-
-@media screen and (max-width:50em) {
-  .logo {
-    font-size: 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hamburger::before {
-    content: "☰";
-  }
-
-  .close::before {
-    content: "✕";
-  }
-
-  .hide {
-    left: -12em;
-  }
-}
-
-.MainScreen {
-  background-color: green;
-}
-
-.createPollButton {
-  margin-top: 1em;
-  color: white;
-  background-color: green;
-  border-radius: 2em;
-}
-
-.langButton {
-  color: white;
-  background-color: greenyellow;
-  border-radius: 2em;
-}
-
-.pollLink {
-  color: black;
-  justify-content: center;
-}
-
-#pollIdEnter {
-  margin-top: 1em;
-  border-color: black;
-  border-radius: 2em;
-  color: black;
-  -ms-transform: translateY(-50%);
-}
-
-.middleSpace {
-  height: auto;
-  width: 2em;
-  margin-top: 1em;
-}
 </style>
