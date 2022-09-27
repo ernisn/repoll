@@ -5,6 +5,10 @@
     </div>
     <div class="logo"><img src="/img/logo.png">rePoll</div>
   </header>
+  
+  <div class = "middleSpace">
+
+</div>
 
   <ResponsiveNav v-bind:hideNav="hideNav">
     <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
@@ -144,6 +148,11 @@ export default {
 
 .participate {
   color: black;
-  
+}
+
+.middleSpace {
+  height: auto;
+  width: 2em;
+  margin-top: 1em;
 }
 </style>
