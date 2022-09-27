@@ -30,6 +30,8 @@
 <script>
 import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
+/* import '../components/Assets/Main.css'; */
+
 const socket = io();
 
 export default {
@@ -102,6 +104,7 @@ export default {
     font-size: 1.5rem;
   }
   .inputbox {
+    margin-top: 1em;
     height: 4em;
     width: 100%;
     display: grid;
@@ -111,10 +114,10 @@ export default {
     border: 2em;
     color: black;
     -ms-transform: translateY(-50%);
-    margin: auto;
   }
 
   #pollWindow {
+    margin-bottom: 2em;
     background-color: white;
   }
 
@@ -143,10 +146,15 @@ export default {
 }
 
 .pollID {
-  color: green;
+  margin-top: 1em;
+  border-color: black;
+  border-radius: 2em;
+  color: black;
+  -ms-transform: translateY(-50%);
 }
 
 .participate {
+  margin-top: 1em;
   color: black;
 }
 

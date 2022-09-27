@@ -1,16 +1,19 @@
 <template>
-  <header class = "MainScreen">
-    <div v-bind:class="['hamburger', {'close': !hideNav}]"
-         v-on:click="toggleNav">
+  <header class="MainScreen">
+    <div v-bind:class="['hamburger', {'close': !hideNav}]" v-on:click="toggleNav">
     </div>
     <div class="logo"><img src="/img/logo.png">rePoll</div>
   </header>
+
+  <div class="middleSpace">
+
+  </div>
 
   <ResponsiveNav v-bind:hideNav="hideNav">
     <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
-    <button class = "langButton" v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+    <button class="langButton" v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
 
   <section class="screen">
@@ -18,36 +21,35 @@
   </section>
 
   <div>
-    {{uiLabels.pollLink}}<input  class = "pollLink" type="text" v-model="pollId" id="pollIdEnter">
-    <div id ="hideAfterCreate">
-    <button v-on:click="createPoll">
-      {{uiLabels.createPoll}}
-    </button>
+    {{uiLabels.pollLink}}<input class="pollLink" type="text" v-model="pollId" id="pollIdEnter">
+    <div id="hideAfterCreate">
+      <button class="createPollButton" v-on:click="createPoll">
+        {{uiLabels.createPoll}}
+      </button>
     </div>
 
-    <div id ="hideBeforeCreate">
-    <div>
-      {{uiLabels.question}} <input type="number" v-model.number="itemId">:
-      <input type="text" v-model="question">
+    <div id="hideBeforeCreate">
       <div>
-        {{uiLabels.addAnswer}}<input id="addAnotherAnswer" v-for="(_, i) in answers"
-               v-model="answers[i]" 
-               v-bind:key="'answer'+ i">
-        <br>
-        <button v-on:click="addAnotherAnswer">
-          {{uiLabels.addAnotherAnswer}}
-        </button>
-        <button v-on:click="addItem">
-          {{uiLabels.addItem}}
-        </button>
+        {{uiLabels.question}} <input type="number" v-model.number="itemId">:
+        <input type="text" v-model="question">
+        <div>
+          {{uiLabels.addAnswer}}<input id="addAnotherAnswer" v-for="(_, i) in answers" v-model="answers[i]"
+            v-bind:key="'answer'+ i">
+          <br>
+          <button v-on:click="addAnotherAnswer">
+            {{uiLabels.addAnotherAnswer}}
+          </button>
+          <button v-on:click="addItem">
+            {{uiLabels.addItem}}
+          </button>
+        </div>
       </div>
-    </div>
 
-    <br>
+      <br>
 
-    <button v-on:click="runPoll">
-      {{uiLabels.runPoll}}
-    </button>
+      <button v-on:click="runPoll">
+        {{uiLabels.runPoll}}
+      </button>
       <button v-on:click="joinPoll">
         {{uiLabels.joinPoll}}
       </button>
@@ -98,14 +100,14 @@ export default {
   },
   methods: {
     createPoll: function () {
-      if(document.getElementById("pollIdEnter").value != "") {
+      if (document.getElementById("pollIdEnter").value != "") {
         var elementToDisplay = document.getElementById("hideBeforeCreate");
         elementToDisplay.style.display = "block";
         var elementToHide = document.getElementById("hideAfterCreate");
         elementToHide.style.display = "none";
-        socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+        socket.emit("createPoll", { pollId: this.pollId, lang: this.lang })
       }
-      else{
+      else {
         console.log("You must enter a poll id before creating poll")
       }
     },
@@ -115,7 +117,7 @@ export default {
         itemId: this.itemId,
         itemQuestion: this.question,
         itemAnswers: this.answers
-      } );
+      });
       this.itemId += 1;
       this.question = "";
       this.answers = ['', ''];
@@ -124,10 +126,10 @@ export default {
       this.answers.push("");
     },
     runPoll: function () {
-      socket.emit("runPoll", {pollId: this.pollId, itemId: this.itemId})
-      console.log({pollId: this.pollId, itemId: this.itemId, itemQuestion: this.question, itemAnswers: this.answers})
+      socket.emit("runPoll", { pollId: this.pollId, itemId: this.itemId })
+      console.log({ pollId: this.pollId, itemId: this.itemId, itemQuestion: this.question, itemAnswers: this.answers })
     },
-    switchLanguage: function() {
+    switchLanguage: function () {
       if (this.lang === "en")
         this.lang = "sv"
       else
@@ -135,10 +137,10 @@ export default {
       socket.emit("switchLanguage", this.lang)
     },
     joinPoll: function () {
-          window.location.href = "#/poll/" + this.pollId;
+      window.location.href = "#/poll/" + this.pollId;
     },
     checkResults: function () {
-          window.location.href = "#/result/" + this.pollId;
+      window.location.href = "#/result/" + this.pollId;
     },
   }
 }
@@ -151,27 +153,30 @@ header {
   display: grid;
   grid-template-columns: 2em auto;
 }
+
 .logo {
   text-transform: uppercase;
   letter-spacing: 0.25em;
   font-size: 2.5rem;
   color: white;
-  padding-top:0.2em;
+  padding-top: 0.2em;
 }
+
 .logo img {
-  height:2.5rem;
+  height: 2.5rem;
   vertical-align: bottom;
   margin-right: 0.5rem;
 }
+
 .hamburger {
-  color:white;
-  width:1em;
+  color: white;
+  width: 1em;
   display: flex;
   align-items: center;
   justify-content: left;
-  padding:0.5rem;
-  top:0;
-  left:0;
+  padding: 0.5rem;
+  top: 0;
+  left: 0;
   height: 2rem;
   cursor: pointer;
   font-size: 1.5rem;
@@ -188,19 +193,29 @@ header {
     align-items: center;
     justify-content: center;
   }
+
   .hamburger::before {
     content: "☰";
   }
+
   .close::before {
     content: "✕";
   }
+
   .hide {
-    left:-12em;
+    left: -12em;
   }
 }
 
 .MainScreen {
   background-color: green;
+}
+
+.createPollButton {
+  margin-top: 1em;
+  color: white;
+  background-color: green;
+  border-radius: 2em;
 }
 
 .langButton {
@@ -215,15 +230,16 @@ header {
 }
 
 #pollIdEnter {
-  height: 4em;
-  width: 100%;
-  display: grid;
-  border-color: yellow;
+  margin-top: 1em;
+  border-color: black;
   border-radius: 2em;
-  border-bottom: 2px;
-  border: 2em;
   color: black;
   -ms-transform: translateY(-50%);
-  margin: auto;
+}
+
+.middleSpace {
+  height: auto;
+  width: 2em;
+  margin-top: 1em;
 }
 </style>
