@@ -59,8 +59,8 @@ Data.prototype.nextQuestion = function(pollId, itemId){
 // Add answers to the item
 Data.prototype.getAnswers = function(pollId, itemId) {
   const currentPoll = this.allPolls.pollId;
-  const currentItem = currentPoll.pollItems[itemId];
   if (typeof currentPoll !== 'undefined') {
+    const currentItem = currentPoll.pollItems[itemId];
     if (typeof currentItem !== 'undefined') {
       return {itemQ: currentItem.itemQuestion, itemAs: currentItem.itemAnswers};
     }
@@ -79,11 +79,16 @@ Data.prototype.getPoll = function(pollId) {
 // In Create Page: Add question to the item
 Data.prototype.getQuestion = function(pollId, itemId) {
   const currentPoll = this.allPolls.pollId;
-  const currentItem = currentPoll.pollItems[itemId];
-  console.log("All the items in this poll:", currentPoll.pollItems);
   if (typeof currentPoll !== 'undefined') {
+    console.log("All the items in this poll:", currentPoll.pollItems);
+    const currentItem = currentPoll.pollItems[itemId];
     console.log("Item requested for pollId", pollId, ". getQuestion returns this currentItem:", currentItem, "with itemId", itemId)
-    return currentItem;
+    //return currentItem;
+    return {
+      item: currentItem,
+      itemId: itemId,
+      votersResponds: currentPoll.votersResponds
+    };
   }
   return []
 }
@@ -111,32 +116,11 @@ Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
         emptyArrayNum += 1 ;
     currentPoll.votersResponds = currentPoll.votersResponds.slice(0, len - emptyArrayNum + 1);
   }
-
-  console.log("Previous voters responds of this item:", currentPoll.votersResponds[itemId], "itemId:", itemId);
+  console.log("Current voters responds of this item:", currentPoll.votersResponds[itemId], "itemId:", itemId);
   console.log("This answer ID was chosen:", answerId);
   let currentItemsResponds = currentPoll.votersResponds[itemId];
   // console.log("answer submitted for ", pollId, itemId, answerId);
   if (typeof currentPoll !== 'undefined') {
-    /*console.log("let answers in submitAnswer:", currentItemsResponds, typeof currentItemsResponds)
-      if (typeof currentItemsResponds !== 'object') {
-          currentItemsResponds = {};
-          currentItemsResponds[answerId] = 1;
-          currentPoll.votersResponds.push(currentAnswers);
-          console.log("This is poll.answers:", currentPoll.votersResponds, "and answers:", currentItemsResponds, typeof currentItemsResponds, "\n --> answers[answer]=", currentItemsResponds[answerId])
-          if (currentPoll.votersResponds.length > 1) {
-            currentItemsResponds = {};
-            currentItemsResponds[answerId] = 2;
-            currentPoll.votersResponds.push(currentAnswers);
-          }
-        }
-    if (typeof currentItemsResponds[answerId] === 'undefined') {
-      currentItemsResponds[answerId] = 1;
-      console.log("If answers is undefined then create and give 1:", currentItemsResponds[answerId])
-    }
-    else {
-      currentItemsResponds[answerId] += 1;
-      console.log("else --> + 1")
-    }*/
     if (typeof currentItemsResponds[answerId] === 'undefined') {
       currentItemsResponds[answerId] = 1;
     }

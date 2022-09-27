@@ -5,7 +5,7 @@
     <div v-bind:style="{height: Amount + '10px'}">
       <span> {{Amount}} </span>
     </div>
-    <div> 
+    <div>
       {{Answer}}
     </div>
   </div>

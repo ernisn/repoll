@@ -15,13 +15,13 @@ function sockets(io, socket, data) {
 
   socket.on('addItem', function(dataAddI) {
     data.addItem(dataAddI.pollId, dataAddI.itemId, dataAddI.itemQuestion, dataAddI.itemAnswers);
-    socket.emit('newQuestion', data.getQuestion(dataAddI.pollId, dataAddI.itemId))
+    socket.emit('newQuestion', data.getQuestion(dataAddI.pollId, dataAddI.itemId));
     socket.emit('dataUpdate', data.getAnswers(dataAddI.pollId, dataAddI.itemId));
   });
 
   socket.on('joinPoll', function(pollId) {
     socket.join(pollId);
-    socket.emit('newQuestion', data.getQuestion(pollId, 0))
+    socket.emit('newQuestion', data.getQuestion(pollId, 0));
     socket.emit('dataUpdate', data.getAnswers(pollId, 0));
   });
 
@@ -32,7 +32,6 @@ function sockets(io, socket, data) {
 
   socket.on('submitAnswer', function(dataSubmitA) {
     data.submitAnswer(dataSubmitA.pollId, dataSubmitA.itemId, dataSubmitA.answerId);
-    io.to(dataSubmitA.pollId).emit('dataUpdate', data.getAnswers(dataSubmitA.pollId, dataSubmitA.itemId));
   });
 
   socket.on('resetAll', () => {
@@ -41,8 +40,8 @@ function sockets(io, socket, data) {
   })
 
   socket.on('finishedCheck', function(dataFinishedCheck) {
-    let howManyLeft = data.getPoll(dataFinishedCheck.pollId).pollItems.length - dataFinishedCheck.itemId;
-    if ( howManyLeft === 2) {
+    let howManyLeft = data.getPoll(dataFinishedCheck.pollId).pollItems.length - dataFinishedCheck.itemId - 2;
+    if ( howManyLeft === 0) {
       console.log("The poll is finished!")
       socket.emit('finished', data.getPoll(dataFinishedCheck.pollId));
     }
@@ -53,8 +52,26 @@ function sockets(io, socket, data) {
           data.getPoll(dataFinishedCheck.pollId).pollItems.length - 1,
           "items in total.")
     }
-  }
-  )
+  })
+
+  let resultPageNr = 0;
+  socket.on('getNextQ', function(d) {
+    if (resultPageNr < eval(data.getPoll(d.pollId).pollItems.length) - 2) {
+      resultPageNr += 1;
+      socket.emit('newQuestion', data.getQuestion(d.pollId, resultPageNr));
+      console.log("Moved to net question");
+    }
+  })
+
+  socket.on('getPrevQ', function(d) {
+    console.log("Previous question button clicked");
+    if(resultPageNr > 0){
+      resultPageNr -= 1;
+      socket.emit('newQuestion', data.getQuestion(d.pollId, resultPageNr));
+      console.log("Moved to previous question");
+    }
+  })
+
 }
 
 module.exports = sockets;

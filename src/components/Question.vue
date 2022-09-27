@@ -1,12 +1,13 @@
 <template>
 
-  <div>Question: {{item.itemQuestion}}</div>
-  <div>Choose your answer:</div>
+  <h4>Question No.{{ itemData.itemId + 1 }}:</h4>
+  {{ itemData.item.itemQuestion }}
 
-  <div v-for="(answerContent, answerId) in item.itemAnswers"
+  <h4>Choose the answer you want to vote for:</h4>
+  <div v-for="(answerContent, answerId) in itemData.item.itemAnswers"
        v-bind:key="answerContent">
     <button v-on:click="clickAnswer(answerId)">
-      Answer {{ answerId }}: {{ answerContent }}
+      Answer {{ answerId + 1 }}: {{ answerContent }}
     </button>
   </div>
 
@@ -16,7 +17,7 @@
 export default {
   name: 'Question',
   props: {
-    item: Object
+    itemData: Object
   },
   data: function () {
     return {

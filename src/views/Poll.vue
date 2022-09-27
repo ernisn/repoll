@@ -1,11 +1,11 @@
 <template>
+
+  <h4>You are answering the poll: {{ pollId }}</h4>
   <div>
-    You are answering the poll: {{ pollId }}
-  </div>
-  <div>
-    <Question v-bind:item="item"
+    <Question v-bind:itemData="item"
               v-on:answer-clicked="submitAnswer($event)"/>
   </div>
+
 </template>
 
 <script>
@@ -27,6 +27,7 @@ export default {
         itemQuestion: "",
         itemAnswers: []
       },
+      votersResponds: [[]],
       pollId: "",
       currentItemNum: 0,
       uiLabels: {}
@@ -35,8 +36,8 @@ export default {
   created: function () {
     this.pollId = this.$route.params.id
     socket.emit('joinPoll', this.pollId)
-    socket.on("newQuestion", (itemQuestion) =>
-        this.item = itemQuestion
+    socket.on("newQuestion", (item) =>
+        this.item = item
     )
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -44,10 +45,7 @@ export default {
     socket.on("finished", () => {
       window.location.href = "#/result/" + this.pollId;
     })
-/*    socket.on("answerClicked", (answerId) => {
-      this.answerId = answerId;
-      console.log("answerId received:", answerId)
-    })*/
+
   },
   methods: {
     submitAnswer: function (answerId) {
