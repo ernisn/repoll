@@ -15,25 +15,27 @@
   <br> ---------- <br>
   Result:{{ resultData.votersResponds[resultData.itemId] }}
   <br> ---------- <br>
-  HERE COMES THE DIAGRAM
-  <!--  <div>
-    <ResultVis v-bind:data="resultData"/>
-  </div>-->
-  <br> ---------- <br>
   <button v-on:click="prevQuestion" class="answerButton">
     {{uiLabels.previousQ}} button pre
   </button>
   <button v-on:click="nextQuestion" class="answerButton" id="nextQuestionButton">
     {{uiLabels.nextQ}} button next
   </button>
+  <br> ---------- <br>
+  HERE COMES THE DIAGRAM
+<!--  <div>
+    <ResultVis
+        v-bind:resultVisData="resultData"/>
+  </div>-->
 
 </template>
 
 
 <script>
 // @ is an alias to /src
-//import ResultVis from '@/components/ResultVis.vue';
+// import ResultVis from '@/components/ResultVis.vue';
 import io from 'socket.io-client';
+
 const socket = io();
 
 export default {
@@ -92,28 +94,6 @@ export default {
       document.getElementById("nextButton").innerHTML = 'Next Question';
       document.getElementById("nextButton").onclick = 'nextQuestion';
       this.isClicked = false;
-    },
-    showResults: function () {
-      socket.emit("showResults", { pollId: this.pollId });
-      socket.on("sendPoll", function (d) {
-        let ans = d.answers;
-        let q = d.questions;
-        let i = 0;
-        q.forEach(element => {
-          console.log(element.q);
-          console.log(element.a);
-          console.log(ans[i]);
-          console.log(element.isCorrect);
-          for (var k = 0; k < element.isCorrect.length; k++) {
-            if ((element.isCorrect[k] == true)) {
-              console.log(k);
-              const correctBar = document.getElementsByClassName('bar')[k];
-              correctBar.style.color = "#33cc33";
-            }
-          }
-          i++;
-        });
-      })
     },
   },
 }

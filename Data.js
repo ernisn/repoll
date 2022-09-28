@@ -101,6 +101,8 @@ Data.prototype.getUILabels = function (lang = "en") {
 // Count the amount of answers submitted
 Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
   const currentPoll = this.allPolls.pollId;
+  const currentItem = currentPoll.pollItems[itemId]
+
   if (typeof currentPoll.votersResponds === 'undefined') {
     currentPoll.votersResponds = [[]];
   }
@@ -123,6 +125,11 @@ Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
   if (typeof currentPoll !== 'undefined') {
     if (typeof currentItemsResponds[answerId] === 'undefined') {
       currentItemsResponds[answerId] = 1;
+      //Fill empty value with 0
+      for (let j = 0; j < currentItem.itemAnswers.length; j++) {
+        currentItemsResponds[j] = currentItemsResponds[j] || 0;
+        console.log("Fill empty value with 0: ", currentItemsResponds);
+      }
     }
     else {
       currentItemsResponds[answerId] += 1;

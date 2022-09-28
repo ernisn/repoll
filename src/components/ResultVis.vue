@@ -1,7 +1,7 @@
 <template>
   <div class="wrapperBars">
     Not here {{resultData}}
-    46545646456456456945
+    <br>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     <div class="bar"
          v-for="(answerContent, answerId) in resultData.item.itemAnswers"
          v-bind:key="answerContent">

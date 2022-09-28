@@ -27,7 +27,6 @@ export default {
         itemQuestion: "",
         itemAnswers: []
       },
-      votersResponds: [[]],
       pollId: "",
       currentItemNum: 0,
       uiLabels: {}
