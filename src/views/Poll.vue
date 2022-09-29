@@ -44,7 +44,6 @@ export default {
     socket.on("finished", () => {
       window.location.href = "#/result/" + this.pollId;
     })
-
   },
   methods: {
     submitAnswer: function (answerId) {

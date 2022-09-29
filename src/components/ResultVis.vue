@@ -1,32 +1,46 @@
 <template>
-  <div class="wrapperBars">
-    RESULTVIS<br>
-    {{resultData}}
 
-<!--    <div class="bar"-->
-<!--         v-for="(answerContent, answerId) in resultData.item.itemAnswers"-->
-<!--         v-bind:key="answerContent">-->
-<!--      {{resultData.item.itemId}}-->
-<!--      {{resultData.votersResponds[resultData.item.itemId][answerId]}}-->
-<!--      <div v-bind:style="{height: Amount + 'em'}">-->
-<!--        <span> Votes: {{Amount}} </span>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        Answer: {{resultData.item.itemAnswers}}-->
-<!--      </div>-->
-<!--    </div>-->
-  </div>
+<!--
+  ALL DATA: {{ resultData }}
+  Answers/Label: {{ resultData.item.itemAnswers }}
+  <br> ---------- <br>
+  Votes/Data: {{ resultData.votersResponds[resultData.itemId] }}
+ -->
 
-  <!--  <div class="wrapperPie">
+  <figure>
+    <figcaption>Result of poll</figcaption>
+    <svg class="chart" width="420" height="150" aria-labelledby="title desc" role="img">
+      <title id="title">Result of poll</title>
+      <desc id="desc">Answers: {{ resultData.item.itemAnswers }}; Votes: {{ resultData.votersResponds[resultData.itemId] }}</desc>
 
-      <div class="pie" v-for="(Amount, Answer) in data" v-bind:key="Answer">
-        <div v-bind:style="{height: Amount + '10px', width: Amount + '10px'}">
-          <span> {{ Amount }} </span>
-        </div>
-      </div>
-
-    </div>-->
-
+      <g class="barSvgBlock"
+         v-for="(vote, answerId) in resultData.votersResponds[resultData.itemId]"
+         v-bind:key="answerId">
+        <text class="answerTitle"
+              x="0"
+              :y="answerId * 50"
+              dy="1em">
+          Answer {{ answerId + 1 }}
+        </text>
+        <text class="answerTip"
+              x="90"
+              :y="answerId * 50"
+              dy="1.3em">
+          {{ resultData.item.itemAnswers[answerId] }}
+        </text>
+        <rect :width="resultData.votersResponds[resultData.itemId][answerId] * 15"
+              height="20"
+              x="90"
+              :y="answerId * 50 + 25">
+        </rect>
+        <text :x="resultData.votersResponds[resultData.itemId][answerId] * 15 + 100"
+              :y="answerId * 50 + 25"
+              dy="1em">
+          {{ resultData.votersResponds[resultData.itemId][answerId] }} vote(s)
+        </text>
+      </g>
+    </svg>
+  </figure>
 
 </template>
 
@@ -35,65 +49,63 @@
 export default {
   name: 'ResultVis',
   props: {
-    resultData: Object
+    resultData: Object,
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.bar {
-  display: inline-block;
-  width: 50px;
-  vertical-align: bottom;
+
+figure {
+  display: block;
+  padding: 2em;
+  border: solid cadetblue 5px;
+  border-radius: 15px;
 }
 
-.bar span {
-  position: relative;
-  top: -1.2em;
-}
-.bar:nth-child(1) div:nth-child(1) {
-  background-color:green;
-}
-.bar:nth-child(2) div:nth-child(1) {
-  background-color:blue;
-}
-.bar:nth-child(3) div:nth-child(1) {
-  background-color:teal;
-}
-.bar:nth-child(4) div:nth-child(1) {
-  background-color:purple;
-}
-.bar:nth-child(5) div:nth-child(1) {
-  background-color:yellow;
+figcaption {
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 20px;
 }
 
-.wrapperBars {
-  padding:3em;
+.barSvgBlock {
+  fill: #aaa;
+  height: 20px;
+  transition: fill .3s ease;
+  cursor: pointer;
+}
+.barSvgBlock text {
+  color: black;
+}
+.barSvgBlock:hover,
+.barSvgBlock:focus {
+  fill: teal;
+}
+.barSvgBlock:hover text,
+.barSvgBlock:focus text {
+  fill: darkslategrey;
 }
 
-
-
-
-.wrapperPie {
-  display: inline-block;
-  width: 300px;
-  vertical-align: bottom;
+.answerTitle {
+  font-weight: bold;
+  font-size: 1.1em;
 }
 
-.pie {
-  width: 300px;
-  aspect-ratio: 1;
-  border-radius: 100%;
-  background: conic-gradient(
-      brown 0 3.55%,
-      black 0 5.00%,
-      blue 0 6.08%,
-      green 0 13.68%,
-      yellow 0 23.27%,
-      orange 0 60.47%,
-      red 0 100%
-  );
+.barSvgBlock .answerTip {
+/*  visibility: hidden;*/
+  font-weight: bold;
+  font-size: 0.8em;
 }
+
+/*.barSvgBlock:hover .answerTip {
+  visibility: visible;
+  fill: grey;
+}*/
+
+
+
 
 </style>

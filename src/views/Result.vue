@@ -8,31 +8,30 @@
   <h4 id="resultHeading"> {{ uiLabels.results }}</h4>
   <h4>Poll ID: {{ pollId }} </h4>
   <h4>Question No.{{ resultData.itemId + 1 }} </h4>
-
-  Question: {{ resultData.item.itemQuestion }}
-  <br> ---------- <br>
+  {{ resultData.item.itemQuestion }}
+<!--
   Answers: {{ resultData.item.itemAnswers }}
-  <br> ---------- <br>
   Result:{{ resultData.votersResponds[resultData.itemId] }}
+-->
   <br> ---------- <br>
   <button v-on:click="prevQuestion" class="answerButton">
     {{uiLabels.previousQ}} button pre
   </button>
+  ---
   <button v-on:click="nextQuestion" class="answerButton" id="nextQuestionButton">
     {{uiLabels.nextQ}} button next
   </button>
-  <br> ---------- <br>
+
+  <div>
+    <ResultVis
+        v-bind:resultData="resultData"/>
+  </div>
+
   <router-link
       v-bind:to="'/poll/'+pollId"
       v-on:click="pageRedirected">
     Go back to the poll
   </router-link>
-  <br> ---------- <br>
-  HERE COMES THE DIAGRAM
-  <div>
-    <ResultVis
-        v-bind:resultData="resultData"/>
-  </div>
 
 </template>
 
