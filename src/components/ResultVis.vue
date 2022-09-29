@@ -1,19 +1,20 @@
 <template>
   <div class="wrapperBars">
-    Not here {{resultData}}
-    <br>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    <div class="bar"
-         v-for="(answerContent, answerId) in resultData.item.itemAnswers"
-         v-bind:key="answerContent">
-      {{resultData.item.itemId}}
-      {{resultData.votersResponds[resultData.item.itemId][answerId]}}
-      <div v-bind:style="{height: Amount + 'em'}">
-        <span> Votes: {{Amount}} </span>
-      </div>
-      <div>
-        Answer: {{resultData.item.itemAnswers}}
-      </div>
-    </div>
+    RESULTVIS<br>
+    {{resultData}}
+
+<!--    <div class="bar"-->
+<!--         v-for="(answerContent, answerId) in resultData.item.itemAnswers"-->
+<!--         v-bind:key="answerContent">-->
+<!--      {{resultData.item.itemId}}-->
+<!--      {{resultData.votersResponds[resultData.item.itemId][answerId]}}-->
+<!--      <div v-bind:style="{height: Amount + 'em'}">-->
+<!--        <span> Votes: {{Amount}} </span>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        Answer: {{resultData.item.itemAnswers}}-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 
   <!--  <div class="wrapperPie">

@@ -22,26 +22,33 @@
     {{uiLabels.nextQ}} button next
   </button>
   <br> ---------- <br>
+  <router-link
+      v-bind:to="'/poll/'+pollId"
+      v-on:click="pageRedirected">
+    Go back to the poll
+  </router-link>
+  <br> ---------- <br>
   HERE COMES THE DIAGRAM
-<!--  <div>
+  <div>
     <ResultVis
-        v-bind:resultVisData="resultData"/>
-  </div>-->
+        v-bind:resultData="resultData"/>
+  </div>
 
 </template>
 
 
 <script>
 // @ is an alias to /src
-// import ResultVis from '@/components/ResultVis.vue';
+import ResultVis from '@/components/ResultVis.vue';
 import io from 'socket.io-client';
 
 const socket = io();
+var pageUpdated = false;
 
 export default {
   name: 'Result',
   components: {
-    //ResultVis,
+    ResultVis,
   },
   data: function () {
     return {
@@ -95,7 +102,20 @@ export default {
       document.getElementById("nextButton").onclick = 'nextQuestion';
       this.isClicked = false;
     },
+
+    pageRedirected: function () {
+      pageUpdated = false;
+    }
   },
+  watch: {
+    // Update DOM when url changed, only update once to prevent redirect loop
+    '$route': function() {
+      if (!pageUpdated) {
+        pageUpdated = true;
+        window.location.reload();
+      }
+    }
+  }
 }
 
 </script>
