@@ -5,9 +5,8 @@
       <div v-bind:class="['hamburger', {'close': !hideNav}]"
            v-on:click="toggleNav">
       </div>
-      <div class="logo"><img src="/img/logo.png">rePoll</div>
-      <a href="/">
-        <h3>This is the repoll</h3>
+      <a href="/" v-on:click="pageRedirected">
+        <div class="logo"><img src="/img/logo.png">rePoll</div>
       </a>
     </header>
 
@@ -74,6 +73,7 @@ import '../assets/main.css';
 import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
 const socket = io();
+var pageUpdated = false;
 
 export default {
   name: 'Create',
@@ -148,6 +148,18 @@ export default {
     checkResults: function () {
           window.location.href = "#/result/" + this.pollId;
     },
+    pageRedirected: function () {
+      pageUpdated = false;
+    }
+  },
+  watch: {
+    // Update DOM when url changed, only update once to prevent redirect loop
+    '$route': function() {
+      if (!pageUpdated) {
+        pageUpdated = true;
+        window.location.reload();
+      }
+    }
   }
 }
 </script>
