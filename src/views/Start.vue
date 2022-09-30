@@ -6,6 +6,7 @@
 
   <header id="header">
     <div class="logo"><img src="/img/logo.png">rePoll</div>
+
     <div v-on:click="switchLanguage"
          class="switch-language">
       {{uiLabels.changeLanguage}}
@@ -22,12 +23,20 @@
     <section class="section" id="joinPoll">
       <div class="close-section">&times;</div>
       <div class="content-box">
-        <div id = "join-text">{{uiLabels.participatePoll}}</div>
+        <div id = "join-text">Have a Poll ID?</div>
         <div id = "join-input">
           <input type="text"
+                 class = "inputBox"
                  v-model="id"
                  placeholder="Poll ID">
-          <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
+          <div class = "clickableText"
+               v-on:click="this.$router.push('/poll/'+id)">
+            {{uiLabels.participatePoll}} ⇾
+          </div>
+          <div class = "clickableText"
+               v-on:click="this.$router.push('/result/'+ id)">
+            {{uiLabels.results}} ⇾
+          </div>
         </div>
       </div>
     </section>
@@ -98,7 +107,7 @@ export default {
           }
           if (element.getAttribute('id') === "joinPoll") {
             document.getElementById("join-text").style = "display: none";
-            document.getElementById("join-input").style = "display: flex";
+            document.getElementById("join-input").style = "display: block";
           }
         }
       };
@@ -169,10 +178,13 @@ header {
   vertical-align: top;
   margin-right: 0.8rem;
 }
-.switch-language{
+.switch-language {
   float:right;
   font-size: 1.2rem;
   margin: 0.8em 0.5em 0 0;
+}
+.switch-language:hover {
+  cursor: pointer;
 }
 
 /* Page sections */
@@ -262,10 +274,29 @@ body {
   font-weight: 300;
 }
 
+.inputBox {
+  opacity: 0.9;
+  height: 3em;
+  margin: 0.2em 0.2em 0.2em 0.2em;
+}
+
+.inputBox:placeholder-shown ~ .clickableText{
+  display:none;
+}
+
 /* Transitions */
 
 #join-input {
   display: none;
+}
+
+.clickableText {
+  font-size: 1.5rem;
+  margin: 1em 0 1em 0;
+}
+
+.clickableText:hover {
+  cursor: pointer;
 }
 
 main {
