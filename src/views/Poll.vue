@@ -1,15 +1,18 @@
 <template>
+<page>
+<h4>You are answering the poll: {{ pollId }}</h4>
+<div>
+  <Question v-bind:itemData="item"
+            v-on:answer-clicked="submitAnswer($event)"/>
+</div>
+</page>
 
-  <h4>You are answering the poll: {{ pollId }}</h4>
-  <div>
-    <Question v-bind:itemData="item"
-              v-on:answer-clicked="submitAnswer($event)"/>
-  </div>
 
 </template>
 
 <script>
 // @ is an alias to /src
+import '../assets/main.css';
 import Question from '@/components/Question.vue';
 import io from 'socket.io-client';
 const socket = io();
@@ -62,3 +65,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>

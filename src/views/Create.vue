@@ -1,68 +1,76 @@
 <template>
-  <header>
-    <div v-bind:class="['hamburger', {'close': !hideNav}]"
-         v-on:click="toggleNav">
-    </div>
-    <div class="logo"><img src="/img/logo.png">rePoll</div>
-  </header>
+  <page>
 
-  <ResponsiveNav v-bind:hideNav="hideNav">
-    <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
-    <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
-    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
-  </ResponsiveNav>
+    <header>
+      <div v-bind:class="['hamburger', {'close': !hideNav}]"
+           v-on:click="toggleNav">
+      </div>
+      <div class="logo"><img src="/img/logo.png">rePoll</div>
+      <a href="/">
+        <h3>This is the repoll</h3>
+      </a>
+    </header>
 
-  <section class="screen">
+    <ResponsiveNav v-bind:hideNav="hideNav">
+      <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
+      <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
+      <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
+      <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+    </ResponsiveNav>
 
-  </section>
+    <section class="screen">
 
-  <div>
-    {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
-    <div id ="hideAfterCreate">
-    <button v-on:click="createPoll">
-      {{uiLabels.createPoll}}
-    </button>
-    </div>
+    </section>
 
-    <div id ="hideBeforeCreate">
     <div>
-      {{uiLabels.question}} <input type="number" v-model.number="itemId">:
-      <input type="text" v-model="question">
-      <div>
-        {{uiLabels.addAnswer}}<input id="addAnotherAnswer" v-for="(_, i) in answers"
-               v-model="answers[i]" 
-               v-bind:key="'answer'+ i">
-        <br>
-        <button v-on:click="addAnotherAnswer">
-          {{uiLabels.addAnotherAnswer}}
-        </button>
-        <button v-on:click="addItem">
-          {{uiLabels.addItem}}
+      {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
+      <div id ="hideAfterCreate">
+        <button v-on:click="createPoll">
+          {{uiLabels.createPoll}}
         </button>
       </div>
+
+      <div id ="hideBeforeCreate">
+        <div>
+          {{uiLabels.question}} <input type="number" v-model.number="itemId">:
+          <input type="text" v-model="question">
+          <div>
+            {{uiLabels.addAnswer}}<input id="addAnotherAnswer" v-for="(_, i) in answers"
+                                         v-model="answers[i]"
+                                         v-bind:key="'answer'+ i">
+            <br>
+            <button v-on:click="addAnotherAnswer">
+              {{uiLabels.addAnotherAnswer}}
+            </button>
+            <button v-on:click="addItem">
+              {{uiLabels.addItem}}
+            </button>
+          </div>
+        </div>
+
+        <br>
+
+        <button v-on:click="runPoll">
+          {{uiLabels.runPoll}}
+        </button>
+        <button v-on:click="joinPoll">
+          {{uiLabels.joinPoll}}
+        </button>
+        <button v-on:click="checkResults">
+          {{uiLabels.checkResults}}
+        </button>
+      </div>
+
+      <br>
+      {{data}}
+      <router-link v-bind:to="'/result/'+pollId">{{uiLabels.checkResults}}</router-link>
     </div>
 
-    <br>
-
-    <button v-on:click="runPoll">
-      {{uiLabels.runPoll}}
-    </button>
-      <button v-on:click="joinPoll">
-        {{uiLabels.joinPoll}}
-      </button>
-      <button v-on:click="checkResults">
-        {{uiLabels.checkResults}}
-      </button>
-    </div>
-
-    <br>
-    {{data}}
-    <router-link v-bind:to="'/result/'+pollId">{{uiLabels.checkResults}}</router-link>
-  </div>
+  </page>
 </template>
 
 <script>
+import '../assets/main.css';
 import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
 const socket = io();
@@ -198,4 +206,5 @@ header {
     left:-12em;
   }
 }
+
 </style>

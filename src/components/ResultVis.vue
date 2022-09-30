@@ -1,5 +1,4 @@
 <template>
-
 <!--
   ALL DATA: {{ resultData }}
   Answers/Label: {{ resultData.item.itemAnswers }}
@@ -9,7 +8,7 @@
 
   <figure>
     <figcaption>Result of poll</figcaption>
-    <svg class="chart" width="420" height="150" aria-labelledby="title desc" role="img">
+    <svg class="chart" width="420" height="320" aria-labelledby="title desc" role="img">
       <title id="title">Result of poll</title>
       <desc id="desc">Answers: {{ resultData.item.itemAnswers }}; Votes: {{ resultData.votersResponds[resultData.itemId] }}</desc>
 
@@ -95,8 +94,8 @@ figcaption {
 }
 
 .barSvgBlock .answerTip {
-/*  visibility: hidden;*/
-  font-weight: bold;
+/*  visibility: hidden;
+  font-weight: bold;*/
   font-size: 0.8em;
 }
 

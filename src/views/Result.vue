@@ -1,4 +1,5 @@
 <template>
+<page>
 
   <header>
     <a href="/">
@@ -9,10 +10,10 @@
   <h4>Poll ID: {{ pollId }} </h4>
   <h4>Question No.{{ resultData.itemId + 1 }} </h4>
   {{ resultData.item.itemQuestion }}
-<!--
-  Answers: {{ resultData.item.itemAnswers }}
-  Result:{{ resultData.votersResponds[resultData.itemId] }}
--->
+  <!--
+    Answers: {{ resultData.item.itemAnswers }}
+    Result:{{ resultData.votersResponds[resultData.itemId] }}
+  -->
   <br> ---------- <br>
   <button v-on:click="prevQuestion" class="answerButton">
     {{uiLabels.previousQ}} button pre
@@ -33,11 +34,13 @@
     Go back to the poll
   </router-link>
 
+</page>
 </template>
 
 
 <script>
 // @ is an alias to /src
+import '../assets/main.css';
 import ResultVis from '@/components/ResultVis.vue';
 import io from 'socket.io-client';
 
@@ -119,6 +122,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
+
 
 </style>
