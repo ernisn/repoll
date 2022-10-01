@@ -66,14 +66,13 @@
       </answer>
       <figure>
         <figcaption>Saved Questions Preview</figcaption>
+        {{ data }}
         <div v-for="(item, itemId) in data.pollItems"
              v-bind:key="item">
-          <div v-if="Object.keys(item).length">
-            Question {{ itemId }} is: {{ item.itemQuestion }}
-            <br>
-            Provided answers are: {{ item.itemAnswers }}
-            <br><br>
-          </div>
+          Question {{ itemId }} is: {{ item.itemQuestion }}
+          <br>
+          Provided answers are: {{ item.itemAnswers }}
+          <br><br>
         </div>
         <button class="button-a run-poll"
                 v-on:click="runPoll">
@@ -134,23 +133,32 @@ export default {
       }
     },
     addItem: function () {
-      socket.emit("addItem", {
-        pollId: this.pollId,
-        itemId: this.itemId,
-        itemQuestion: this.question,
-        itemAnswers: this.answers
-      } );
-      this.itemId += 1;
-      this.question = "";
-      this.answers = ['', ''];
+      // All answer field and question field not empty
+      if (this.question.length && this.answers.every(function(i){return i !== "";})) {
+        socket.emit("addItem", {
+          pollId: this.pollId,
+          itemId: this.itemId,
+          itemQuestion: this.question,
+          itemAnswers: this.answers
+        } );
+        this.itemId += 1;
+        this.question = "";
+        this.answers = ['', ''];
+      }
     },
     addAnotherAnswer: function () {
-      this.answers.push("");
+      // All answer field not empty
+      if (this.answers.every(function(i){return i !== "";})) {
+        this.answers.push("");
+      }
     },
     runPoll: function () {
-      socket.emit("runQuestion", {pollId: this.pollId, itemId: this.itemId})
-      console.log({pollId: this.pollId, itemId: this.itemId, itemQuestion: this.question, itemAnswers: this.answers})
-      window.location.href = "#/poll/" + this.pollId
+      // All answer field and question field not empty or saved
+      if (this.question.length && this.answers.every(function(i){return i !== "";}) || this.itemId > 0) {
+        socket.emit("runQuestion", {pollId: this.pollId, itemId: this.itemId})
+        console.log({pollId: this.pollId, itemId: this.itemId, itemQuestion: this.question, itemAnswers: this.answers})
+        window.location.href = "#/poll/" + this.pollId
+      }
     },
     switchLanguage: function() {
       if (this.lang === "en")

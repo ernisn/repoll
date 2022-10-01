@@ -136,11 +136,11 @@ main {
 }
 .prevButton {
   float:left;
-  margin-left: 3em;
+  margin-left: 40px;
 }
 .nextButton {
   float:right;
-  margin-right: 3em;
+  margin-right: 40px;
 }
 
 </style>

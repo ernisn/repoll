@@ -32,11 +32,11 @@
                  placeholder="Poll ID">
           <div class = "clickable-text"
                v-on:click="this.$router.push('/poll/'+id)">
-            {{uiLabels.participatePoll}} ⇾
+            {{uiLabels.participatePoll}} ⇨
           </div>
           <div class = "clickable-text"
                v-on:click="this.$router.push('/result/'+ id)">
-            {{uiLabels.results}} ⇾
+            {{uiLabels.results}} ⇨
           </div>
         </div>
       </div>

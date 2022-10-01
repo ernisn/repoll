@@ -10,7 +10,7 @@ figure {
     padding: 2em;
     border: solid cadetblue 5px;
     border-radius: 15px;
-    max-width: 40vw;
+    /*max-width: 40vw;*/
 }
 figcaption {
     font-weight: bold;
