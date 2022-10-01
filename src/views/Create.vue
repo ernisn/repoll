@@ -1,76 +1,92 @@
 <template>
   <page>
 
-    <header>
-      <div v-bind:class="['hamburger', {'close': !hideNav}]"
-           v-on:click="toggleNav">
+    <header id="header">
+      <div class="logo"
+           v-on:click="this.$router.push('/'); pageRedirected">
+<!--        <svg version="1.1" baseProfile="tiny" id="go-back" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+             x="0px" y="0px" width="36px" height="36px" viewBox="0 0 42 42" xml:space="preserve">
+          <polygon fill="#ffffff"  points="27.066,1 7,21.068 26.568,40.637 31.502,35.704 16.865,21.068 32,5.933 "/>
+        </svg>-->
+        <img src="/img/logo.png">
+        rePoll
       </div>
-      <a href="/" v-on:click="pageRedirected">
-        <div class="logo"><img src="/img/logo.png">rePoll</div>
-      </a>
+      <div class="page-title">
+        Create Poll
+      </div>
+      <div v-on:click="switchLanguage"
+           class="switch-language">
+        🌍 {{uiLabels.changeLanguage}}
+      </div>
     </header>
 
-    <ResponsiveNav v-bind:hideNav="hideNav">
-      <router-link v-bind:to="'/'">{{uiLabels.joinPoll}}</router-link>
-      <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-      <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
-      <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
-    </ResponsiveNav>
-
-    <section class="screen">
-
-    </section>
-
-    <div>
-      {{uiLabels.pollLink}}<input type="text" v-model="pollId" id="pollIdEnter">
-      <div id ="hideAfterCreate">
-        <button v-on:click="createPoll">
-          {{uiLabels.createPoll}}
+    <br>
+    <input class="input-box-dark"
+           type="text"
+           placeholder="Choose your poll ID"
+           v-model="pollId"
+           id="pollIdEnter">
+    <br>
+    <button class="button-a hide-button"
+            id ="hideAfterCreate"
+            v-on:click="createPoll">
+      {{uiLabels.createPoll}}
+    </button>
+    <main id ="hideBeforeCreate">
+      <question>
+        {{uiLabels.question}} No.
+        <input type="number"
+               readonly
+               class="input-box-number"
+               v-model="itemId">
+        <input type="text"
+               class="input-box-dark"
+               placeholder="Question"
+               v-model="question">
+      </question>
+      <addQuestion>
+        <button class="button-b"
+                v-on:click="addItem">
+          Save this question and add another one
         </button>
-      </div>
-
-      <div id ="hideBeforeCreate">
-        <div>
-          {{uiLabels.question}} <input type="number" v-model.number="itemId">:
-          <input type="text" v-model="question">
-          <div>
-            {{uiLabels.addAnswer}}<input id="addAnotherAnswer" v-for="(_, i) in answers"
-                                         v-model="answers[i]"
-                                         v-bind:key="'answer'+ i">
+      </addQuestion>
+      <answer>
+        Answers:
+        <input id="addAnotherAnswer"
+               class="input-box-dark"
+               placeholder="Answer"
+               v-for="(_, i) in answers"
+               v-model="answers[i]"
+               v-bind:key="'answer'+ i">
+        <button class="button-b"
+                v-on:click="addAnotherAnswer">
+          &plus;
+        </button>
+      </answer>
+      <figure>
+        <figcaption>Saved Questions Preview</figcaption>
+        <div v-for="(item, itemId) in data.pollItems"
+             v-bind:key="item">
+          <div v-if="Object.keys(item).length">
+            Question {{ itemId }} is: {{ item.itemQuestion }}
             <br>
-            <button v-on:click="addAnotherAnswer">
-              {{uiLabels.addAnotherAnswer}}
-            </button>
-            <button v-on:click="addItem">
-              {{uiLabels.addItem}}
-            </button>
+            Provided answers are: {{ item.itemAnswers }}
+            <br><br>
           </div>
         </div>
-
-        <br>
-
-        <button v-on:click="runPoll">
-          {{uiLabels.runPoll}}
+        <button class="button-a run-poll"
+                v-on:click="runPoll">
+          Run Poll
         </button>
-        <button v-on:click="joinPoll">
-          {{uiLabels.joinPoll}}
-        </button>
-        <button v-on:click="checkResults">
-          {{uiLabels.checkResults}}
-        </button>
-      </div>
-
-      <br>
-      {{data}}
-      <router-link v-bind:to="'/result/'+pollId">{{uiLabels.checkResults}}</router-link>
-    </div>
+      </figure>
+    </main>
 
   </page>
 </template>
 
 <script>
 import '../assets/main.css';
-import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
 const socket = io();
 var pageUpdated = false;
@@ -78,7 +94,7 @@ var pageUpdated = false;
 export default {
   name: 'Create',
   components: {
-    ResponsiveNav
+
   },
   data: function () {
     return {
@@ -106,9 +122,9 @@ export default {
   },
   methods: {
     createPoll: function () {
-      if(document.getElementById("pollIdEnter").value != "") {
+      if(document.getElementById("pollIdEnter").value !== "") {
         var elementToDisplay = document.getElementById("hideBeforeCreate");
-        elementToDisplay.style.display = "block";
+        elementToDisplay.style.display = "grid";
         var elementToHide = document.getElementById("hideAfterCreate");
         elementToHide.style.display = "none";
         socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
@@ -132,8 +148,9 @@ export default {
       this.answers.push("");
     },
     runPoll: function () {
-      socket.emit("runPoll", {pollId: this.pollId, itemId: this.itemId})
+      socket.emit("runQuestion", {pollId: this.pollId, itemId: this.itemId})
       console.log({pollId: this.pollId, itemId: this.itemId, itemQuestion: this.question, itemAnswers: this.answers})
+      window.location.href = "#/poll/" + this.pollId
     },
     switchLanguage: function() {
       if (this.lang === "en")
@@ -142,18 +159,12 @@ export default {
         this.lang = "en"
       socket.emit("switchLanguage", this.lang)
     },
-    joinPoll: function () {
-          window.location.href = "#/poll/" + this.pollId;
-    },
-    checkResults: function () {
-          window.location.href = "#/result/" + this.pollId;
-    },
     pageRedirected: function () {
       pageUpdated = false;
     }
   },
   watch: {
-    // Update DOM when url changed, only update once to prevent redirect loop
+    // Reload when url changed, only update once to prevent redirect loop
     '$route': function() {
       if (!pageUpdated) {
         pageUpdated = true;
@@ -165,58 +176,46 @@ export default {
 </script>
 
 <style scoped>
-header {
-  background-color: black;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 2em auto;
-}
-.logo {
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  font-size: 2.5rem;
-  color: white;
-  padding-top:0.2em;
-}
-.logo img {
-  height:2.5rem;
-  vertical-align: bottom;
-  margin-right: 0.5rem;
-}
-.hamburger {
-  color:white;
-  width:1em;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  padding:0.5rem;
-  top:0;
-  left:0;
-  height: 2rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
 
 #hideBeforeCreate {
   display: none
 }
 
-@media screen and (max-width:50em) {
-  .logo {
-    font-size: 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hamburger::before {
-    content: "☰";
-  }
-  .close::before {
-    content: "✕";
-  }
-  .hide {
-    left:-12em;
-  }
+main {
+  display: grid;
+  grid-template: "question     question"
+                 "answers      figure"
+                 "addQuestion  figure";
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 0;
+  grid-column-gap: 10px;
+  padding: 0 3em 0 4em;
 }
+main > question {
+  grid-area: question;
+}
+main > answers {
+  grid-area: answers;
+}
+main > addQuestion {
+  grid-area: addQuestion;
+  position: relative;
+}
+addQuestion .button-b{
+  float: right;
+  margin-top: 1em;
+}
+main > figure {
+  grid-area: figure;
+  text-align: left;
+  position:relative;
+}
+figure .run-poll {
+  position: absolute;
+  bottom: 1.2em;
+  right: 1.2em;
+}
+
 
 </style>

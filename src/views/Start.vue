@@ -1,15 +1,16 @@
 <template>
-<!--
-    <router-link v-bind:to="'/result/'+id">{{uiLabels.results}}</router-link>
--->
 <page>
 
   <header id="header">
-    <div class="logo"><img src="/img/logo.png">rePoll</div>
+    <div class="logo"
+         v-on:click="this.$router.push('/')">
+      <img src="/img/logo.png">
+      rePoll
+    </div>
 
     <div v-on:click="switchLanguage"
          class="switch-language">
-      {{uiLabels.changeLanguage}}
+      🌍 {{uiLabels.changeLanguage}}
     </div>
   </header>
 
@@ -26,14 +27,14 @@
         <div id = "join-text">Have a Poll ID?</div>
         <div id = "join-input">
           <input type="text"
-                 class = "inputBox"
+                 class = "input-box"
                  v-model="id"
                  placeholder="Poll ID">
-          <div class = "clickableText"
+          <div class = "clickable-text"
                v-on:click="this.$router.push('/poll/'+id)">
             {{uiLabels.participatePoll}} ⇾
           </div>
-          <div class = "clickableText"
+          <div class = "clickable-text"
                v-on:click="this.$router.push('/result/'+ id)">
             {{uiLabels.results}} ⇾
           </div>
@@ -132,63 +133,13 @@ export default {
 </script>
 
 <style scoped>
-/*
-  .inputbox {
-  -ms-transform: translateY(-50%);
-  margin: auto;
-  }
-
-@media screen and (max-width:50em) {
-  .logo {
-    font-size: 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hamburger::before {
-    content: "☰";
-  }
-  .close::before {
-    content: "✕";
-  }
-  .hide {
-    left:-12em;
-  }
-}
-*/
-
-
-/* New CSS */
 
 /* Header */
 header {
-  z-index: 1;
-  position: relative;
-  padding: 1.8em 2em 0 2em;
-  overflow: auto;
-  color: white;
-}
-.logo {
-  float:left;
-  letter-spacing: 0.1em;
-  font-size: 2.5rem;
-}
-.logo img {
-  height: 2.5rem;
-  vertical-align: top;
-  margin-right: 0.8rem;
-}
-.switch-language {
-  float:right;
-  font-size: 1.2rem;
-  margin: 0.8em 0.5em 0 0;
-}
-.switch-language:hover {
-  cursor: pointer;
+  background-color: rgba(114, 204, 167, 0);
 }
 
 /* Page sections */
-
 .section {
   position: absolute;
   z-index: 0;
@@ -207,10 +158,21 @@ header {
   left: 0;
   background: #72cca7;
 }
+.section:nth-child(1):not(.is-expanded):hover {
+  width: 51%;
+}
+.section:nth-child(1):not(.is-expanded):hover ~ .section:nth-child(2) {
+  left: 51%;
+  width: 49%;
+}
 .section:nth-child(2) {
   top: 0;
   left: 50%;
   background: #10a296;
+}
+.section:nth-child(2):not(.is-expanded):hover {
+  left: 49%;
+  width: 51%;
 }
 .section.is-expanded {
   top: 0;
@@ -223,7 +185,6 @@ header {
 .has-expanded-item .section:not(.is-expanded) {
   transform: scale(0);
 }
-
 .close-section {
   position: absolute;
   top: 0;
@@ -248,22 +209,9 @@ header {
   transition-delay: 500ms;
   pointer-events: initial;
 }
-
 * {
   box-sizing: border-box;
 }
-
-html {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
-  margin: 0;
-  font: 16px/1.5 "Roboto Slab", sans-serif;
-  background: #000;
-}
-
 .content-box {
   display: flex;
   height: 100%;
@@ -274,31 +222,11 @@ body {
   font-weight: 300;
 }
 
-.inputBox {
-  opacity: 0.9;
-  height: 3em;
-  margin: 0.2em 0.2em 0.2em 0.2em;
-}
-
-.inputBox:placeholder-shown ~ .clickableText{
-  display:none;
-}
-
 /* Transitions */
-
 #join-input {
   display: none;
 }
-
-.clickableText {
-  font-size: 1.5rem;
-  margin: 1em 0 1em 0;
-}
-
-.clickableText:hover {
-  cursor: pointer;
-}
-
+/* Page leave transition */
 main {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;

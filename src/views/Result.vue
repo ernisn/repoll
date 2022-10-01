@@ -1,32 +1,39 @@
 <template>
 <page>
 
-  <header>
-    <a href="/">
-      <h3>This is the repoll</h3>
-    </a>
+  <header id="header">
+    <div class="logo"
+         v-on:click="this.$router.push('/'); pageRedirected">
+      <img src="/img/logo.png">
+      rePoll
+    </div>
+    <div class="page-title">
+      Result - #ID {{ pollId }}
+    </div>
+    <div v-on:click="switchLanguage"
+         class="switch-language">
+      🌍 {{uiLabels.changeLanguage}}
+    </div>
   </header>
-  <h4 id="resultHeading"> {{ uiLabels.results }}</h4>
-  <h4>Poll ID: {{ pollId }} </h4>
-  <h4>Question No.{{ resultData.itemId + 1 }} </h4>
-  {{ resultData.item.itemQuestion }}
-  <!--
-    Answers: {{ resultData.item.itemAnswers }}
-    Result:{{ resultData.votersResponds[resultData.itemId] }}
-  -->
-  <br> ---------- <br>
-  <button v-on:click="prevQuestion" class="answerButton">
-    {{uiLabels.previousQ}} button pre
-  </button>
-  ---
-  <button v-on:click="nextQuestion" class="answerButton" id="nextQuestionButton">
-    {{uiLabels.nextQ}} button next
-  </button>
 
-  <div>
+  <h2>Question No.{{ resultData.itemId }} </h2>
+  {{ resultData.item.itemQuestion }}
+  <br><br><br>
+
+  <main>
+    <button class="prevButton button-b"
+            v-on:click="prevQuestion">
+      ⇦ {{uiLabels.previousQ}} Previous Question
+    </button>
+    <button class="nextButton button-b"
+            v-on:click="nextQuestion"
+            id="nextQuestionButton">
+      {{uiLabels.nextQ}} Next Question ⇨
+    </button>
+    <br><br><br>
     <ResultVis
         v-bind:resultData="resultData"/>
-  </div>
+  </main>
 
   <router-link
       v-bind:to="'/poll/'+pollId"
@@ -110,7 +117,7 @@ export default {
     }
   },
   watch: {
-    // Update DOM when url changed, only update once to prevent redirect loop
+    // Reload when url changed, only update once to prevent redirect loop
     '$route': function() {
       if (!pageUpdated) {
         pageUpdated = true;
@@ -123,6 +130,17 @@ export default {
 </script>
 
 <style>
-
+main {
+  margin: auto;
+  max-width: 50vw;
+}
+.prevButton {
+  float:left;
+  margin-left: 3em;
+}
+.nextButton {
+  float:right;
+  margin-right: 3em;
+}
 
 </style>

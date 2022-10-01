@@ -1,11 +1,200 @@
 /* Global CSS */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #effff9;
+}
+
+figure {
+    display: block;
+    padding: 2em;
+    border: solid cadetblue 5px;
+    border-radius: 15px;
+    max-width: 40vw;
+}
+figcaption {
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+/*
+    Header
+*/
+header {
+    z-index: 100;
+    background-color: #72cca7;
+    position: relative;
+    padding: 1.5em 2em 1em 2em;
+    overflow: hidden;
+    color: white;
+}
+.logo {
+    float:left;
+    font-size: 2rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+}
+.logo:hover {
+    cursor: pointer;
+}
+.logo img {
+    height: 2rem;
+    vertical-align: top;
+}
+.logo img:hover {
+    transform: scale(1.05);
+}
+.switch-language {
+    float:right;
+    font-size: 1.2rem;
+    margin: 0 0.5em 0.5em 0;
+}
+.switch-language:hover {
+    color: darkslategrey;
+    cursor: pointer;
+}
+.page-title {
+    float:left;
+    font-size: 1.2rem;
+    margin: 0.6em 0 0 0.6em;
+}
 
 
+/*
+    Input box style
+*/
 
+.input-box {
+    background-color: rgba(63, 63, 63, 0.0);
+    height: 2em;
+    margin: 0.2em 0.2em 0.2em 0.2em;
+    border:0px;
+    outline: 0;
+    border-bottom:2px solid #eee;
+    color: white;
+    font-size: 1.3rem;
+}
+.input-box:placeholder-shown ~ .clickable-text{
+    display:none;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: lightgrey;
+    font-size: 1.2rem;
+    opacity: 1; /* Firefox */
+}
+
+.input-box-dark {
+    background-color: rgba(63, 63, 63, 0.0);
+    height: 1.5em;
+    margin: 0.5em 1em 0.5em 1em;
+    border:0px;
+    outline: 0;
+    border-bottom:2px solid #98d0bb;
+    color: gray;
+    font-size: 1.2rem;
+}
+.input-box-dark:placeholder-shown ~ .hide-button{
+    display:none;
+}
+.input-box-dark::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #98d0bb;
+    font-size: 1rem;
+    opacity: 1; /* Firefox */
+}
+.input-box-number {
+    background-color: #72cca7;
+    height: 2.35em;
+    width: 2.35em;
+    outline: 0;
+    border: 0;
+    border-radius: 2.35em;
+    text-align: right;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/*
+    Buttons style
+*/
+
+/* Type A Highlight Button */
+.button-a {
+    margin: 10px;
+    padding: 15px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    border: 0px;
+    font-weight: 700;
+    box-shadow: 0px 0px 14px -7px #72cca7;
+    background-image: linear-gradient(45deg, #10a296 0%, #72cca7 51%, #10a296 100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+.button-a:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+.button-a:active {
+    transform: scale(0.95);
+}
+
+/* Type B Secondary Button */
+.button-b {
+   background-color: rgba(255, 255, 255, 0.72);
+   border: 2px solid rgba(95, 158, 160, 0.72);
+   border-radius: 10px;
+   box-sizing: border-box;
+   color: #111827;
+   font-size: .875rem;
+   font-weight: 600;
+   line-height: 1.25rem;
+   padding: .75rem 1rem;
+   text-align: center;
+   text-decoration: none #D1D5DB solid;
+   text-decoration-thickness: auto;
+   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+   cursor: pointer;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+}
+.button-b:hover {
+    background-color: rgb(249,250,251);
+}
+.button-b:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+.button-b:focus-visible {
+    box-shadow: none;
+}
+
+/*
+    Clickable text style
+*/
+
+.clickable-text {
+    font-size: 1.5rem;
+    margin: 1em 0 1em 0;
+}
+
+.clickable-text:hover {
+    color: darkslategrey;
+    cursor: pointer;
+}
 
 /*
     Page fade in animation
 */
+
 page {
     animation: fadeInAnimation ease 1s;
     animation-iteration-count: 1;

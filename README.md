@@ -1,6 +1,8 @@
 # rePoll
 
-Redo of Polly (https://github.com/ernisn/polly) without the usage of extra external libraries.
+Redo of Polly (https://github.com/ernisn/polly) 
+
+Totally redesigned and implemented without the usage of extra external libraries.
 
 Based on Polly (https://github.com/laaksoharju/polly | @20220611)
 
@@ -35,14 +37,14 @@ allPolls.pollId
 
 	allPolls.pollId.votersResponds
 	// Count voters responds of a certain answer, 2 dimensional array
-		allPolls.pollId.votersResponds[itemId-1][answerId-1]
+		allPolls.pollId.votersResponds[itemId+1][answerId+1]
 		// How many times this answer was chosen, number
 		// Example: votersResponds[2][1]=3 means under Question3 the Answer2 is voted 3 times
 
 // "currentQuestion" is replaced by "itemId" because its usage messed up the object hierarchy
 ```
 
-An example:
+Example:
 
 ```javascript
 {

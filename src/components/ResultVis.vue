@@ -19,7 +19,7 @@
               x="0"
               :y="answerId * 50"
               dy="1em">
-          Answer {{ answerId + 1 }}
+          Answer {{ answerId }}
         </text>
         <text class="answerTip"
               x="90"
@@ -57,19 +57,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-figure {
-  display: block;
-  padding: 2em;
-  border: solid cadetblue 5px;
-  border-radius: 15px;
-}
-
-figcaption {
-  font-weight: bold;
-  color: #000;
-  margin-bottom: 20px;
-}
-
 .barSvgBlock {
   fill: #aaa;
   height: 20px;
@@ -94,15 +81,8 @@ figcaption {
 }
 
 .barSvgBlock .answerTip {
-/*  visibility: hidden;
-  font-weight: bold;*/
   font-size: 0.8em;
 }
-
-/*.barSvgBlock:hover .answerTip {
-  visibility: visible;
-  fill: grey;
-}*/
 
 
 

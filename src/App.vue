@@ -3,12 +3,6 @@
 </template>
 
 <style>
-body {
-  margin: 0;
-  padding: 0;
-  background-color: white;
-
-}
 #app {
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
