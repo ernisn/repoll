@@ -8,7 +8,7 @@
       rePoll
     </div>
     <div class="page-title">
-      <i> Result - # {{ pollId }} </i>
+      <i> {{uiLabels.result}} - # {{ pollId }} </i>
     </div>
     <div v-on:click="switchLanguage"
          class="switch-language">
@@ -16,19 +16,19 @@
     </div>
   </header>
 
-  <h2>Question No.{{ resultData.itemId }} </h2>
+  <h2>{{uiLabels.question}} No.{{ resultData.itemId }} </h2>
   {{ resultData.item.itemQuestion }}
   <br><br><br>
 
   <main>
     <button class="prevButton button-b"
             v-on:click="prevQuestion">
-      ⇦ {{uiLabels.previousQ}} Previous Question
+      ⇦ {{uiLabels.previous_question}}
     </button>
     <button class="nextButton button-b"
             v-on:click="nextQuestion"
             id="nextQuestionButton">
-      {{uiLabels.nextQ}} Next Question ⇨
+      {{uiLabels.next_question}} ⇨
     </button>
     <br><br><br>
     <ResultVis
@@ -38,7 +38,7 @@
   <router-link
       v-bind:to="'/poll/'+pollId"
       v-on:click="pageRedirected">
-    Go back to the poll
+    {{uiLabels.back_to_poll}}
   </router-link>
 
 </page>

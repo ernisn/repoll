@@ -105,7 +105,6 @@ Data.prototype.getQuestion = function(pollId, itemId) {
         "getQuestion returns this currentItem:", currentItem,
         "with itemId", itemId
     )
-    //return currentItem;
     return {
       item: currentItem,
       itemId: itemId,
@@ -124,7 +123,6 @@ Data.prototype.getUILabels = function (lang = "en") {
 Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
   const currentPoll = this.allPolls[pollId];
   const currentItem = currentPoll.pollItems[itemId]
-
   if (typeof currentPoll.votersResponds === 'undefined') {
     currentPoll.votersResponds = [[]];
   }
@@ -151,7 +149,6 @@ Data.prototype.submitAnswer = function(pollId, itemId, answerId) {
       if (typeof currentItem.itemAnswers !== 'undefined') {
         for (let j = 0; j < currentItem.itemAnswers.length; j++) {
           currentItemsResponds[j] = currentItemsResponds[j] || 0;
-          //console.log("Fill empty value with 0: ", currentItemsResponds);
         }
       }
     }

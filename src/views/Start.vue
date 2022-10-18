@@ -18,13 +18,15 @@
     <section class="section" id="createPoll">
       <div class="close-section">&times;</div>
       <div class="content-box">
-        {{uiLabels.createPoll}}
+        {{uiLabels.create_poll}}
       </div>
     </section>
     <section class="section" id="joinPoll">
       <div class="close-section">&times;</div>
       <div class="content-box">
-        <div id = "join-text">Have a Poll ID?</div>
+        <div id = "join-text">
+          {{uiLabels.start_have_poll_id}}
+        </div>
         <div id = "join-input">
           <input type="text"
                  class = "input-box"
@@ -32,11 +34,11 @@
                  placeholder="Poll ID">
           <div class = "clickable-text"
                v-on:click="this.$router.push('/poll/'+id)">
-            {{uiLabels.participatePoll}} ⇨
+            {{uiLabels.participate_poll}} ⇨
           </div>
           <div class = "clickable-text"
                v-on:click="this.$router.push('/result/'+ id)">
-            {{uiLabels.results}} ⇨
+            {{uiLabels.show_poll_results}} ⇨
           </div>
         </div>
       </div>

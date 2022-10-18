@@ -13,7 +13,7 @@
         rePoll
       </div>
       <div class="page-title">
-        <i> Create Poll - # {{ pollId }} </i>
+        <i> {{uiLabels.create_poll}} - # {{ pollId }} </i>
       </div>
       <div v-on:click="switchLanguage"
            class="switch-language">
@@ -24,13 +24,13 @@
     <br>
       <input class="input-box-dark"
              type="text"
-             placeholder="Choose your poll ID"
+             placeholder="Poll ID"
              v-model="rawPollId"
              id="pollIdEnter">
       <button class="button-a hide-button"
               id="checkIdBtn"
               v-on:click="checkId">
-        Check ID
+        {{uiLabels.check_id}}
       </button>
     <div>
       <i> {{ this.idNote }} </i>
@@ -38,7 +38,7 @@
     <button class="button-a hide-button"
             id ="createBtn"
             v-on:click="createPoll">
-      {{uiLabels.createPoll}}
+      {{uiLabels.create_poll}}
     </button>
     <main id ="hideBeforeCreate">
       <question>
@@ -52,14 +52,8 @@
                placeholder="Question"
                v-model="item.itemQuestion">
       </question>
-      <addQuestion>
-        <button class="button-b"
-                v-on:click="addItem">
-          Save this question and add another one
-        </button>
-      </addQuestion>
       <answer>
-        Answers:
+        {{uiLabels.answers}}:
         <input id="addAnotherAnswer"
                class="input-box-dark"
                placeholder="Answer"
@@ -68,15 +62,21 @@
                v-bind:key="'answer'+ i">
         <button class="button-b"
                 v-on:click="addAnotherAnswer">
-          &plus;
+          &plus; {{uiLabels.add_answer}}
         </button>
       </answer>
+      <addQuestion>
+        <button class="button-b"
+                v-on:click="addItem">
+          {{uiLabels.add_question}}
+        </button>
+      </addQuestion>
       <figure>
-        <figcaption>Previous Question Review</figcaption>
+        <figcaption> {{uiLabels.review_saved_question}} </figcaption>
         <div v-if="pollData.itemQuestion">
-          Question: {{ pollData.itemQuestion }}
+          {{uiLabels.question}}: {{ pollData.itemQuestion }}
           <br>
-          Provided answers are: {{ pollData.itemAnswers }}
+          {{uiLabels.provided_answers}}: {{ pollData.itemAnswers }}
         </div>
 <!--        <div v-for="(item, itemId) in pollData.pollItems"
              v-bind:key="item">
@@ -87,7 +87,7 @@
         </div>-->
         <button class="button-a run-poll"
                 v-on:click="runPoll">
-          Run Poll
+          {{uiLabels.run_poll}}
         </button>
       </figure>
     </main>
