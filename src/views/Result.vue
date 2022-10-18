@@ -100,15 +100,15 @@ export default {
     },
 
     nextQuestion: function () {
-      socket.emit("getNextQ", {pollID: this.pollId });
+      socket.emit("getNextQ", { pollId: this.pollId });
       this.isClicked = false;
     },
 
     prevQuestion: function () {
       socket.emit("getPrevQ", { pollId: this.pollId });
-      //Resets "next question" button if it has previously been changed to say "View Results"
-      document.getElementById("nextButton").innerHTML = 'Next Question';
-      document.getElementById("nextButton").onclick = 'nextQuestion';
+      // Resets "next question" button if it has previously been changed to say "View Results"
+      // document.getElementById("nextButton").innerHTML = 'Next Question';
+      // document.getElementById("nextButton").onclick = 'nextQuestion';
       this.isClicked = false;
     },
 

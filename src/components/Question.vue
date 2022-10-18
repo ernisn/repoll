@@ -23,6 +23,7 @@ export default {
   },
   data: function () {
     return {
+      pollId: "",
       answerId: 0
     }
   },

@@ -39,11 +39,11 @@
         <input type="number"
                readonly
                class="input-box-number"
-               v-model="itemId">
+               v-model="item.itemId">
         <input type="text"
                class="input-box-dark"
                placeholder="Question"
-               v-model="question">
+               v-model="item.itemQuestion">
       </question>
       <addQuestion>
         <button class="button-b"
@@ -56,8 +56,8 @@
         <input id="addAnotherAnswer"
                class="input-box-dark"
                placeholder="Answer"
-               v-for="(_, i) in answers"
-               v-model="answers[i]"
+               v-for="(_, i) in item.itemAnswers"
+               v-model="item.itemAnswers[i]"
                v-bind:key="'answer'+ i">
         <button class="button-b"
                 v-on:click="addAnotherAnswer">
@@ -66,8 +66,8 @@
       </answer>
       <figure>
         <figcaption>Saved Questions Preview</figcaption>
-        {{ data }}
-        <div v-for="(item, itemId) in data.pollItems"
+        {{ pollData }}
+        <div v-for="(item, itemId) in pollData.pollItems"
              v-bind:key="item">
           Question {{ itemId }} is: {{ item.itemQuestion }}
           <br>
@@ -99,10 +99,12 @@ export default {
     return {
       lang: "",
       pollId: "",
-      question: "",
-      answers: ["", ""],
-      itemId: 0,
-      data: {},
+      item: {
+        itemId: 0,
+        itemQuestion: "",
+        itemAnswers: ["", ""]
+      },
+      pollData: {},
       uiLabels: {}
     }
   },
@@ -113,10 +115,10 @@ export default {
       this.uiLabels = labels
     })
     socket.on("dataUpdate", (data) =>
-      this.data = data
+      this.pollData = data
     )
     socket.on("pollCreated", (data) =>
-      this.data = data
+      this.pollData = data
     )
   },
   methods: {
@@ -128,35 +130,32 @@ export default {
         elementToHide.style.display = "none";
         socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
       }
-      else{
-        console.log("You must enter a poll id before creating poll")
-      }
     },
     addItem: function () {
       // All answer field and question field not empty
-      if (this.question.length && this.answers.every(function(i){return i !== "";})) {
+      if (this.item.itemQuestion.length && this.item.itemAnswers.every(function(i){return i !== "";})) {
         socket.emit("addItem", {
           pollId: this.pollId,
-          itemId: this.itemId,
-          itemQuestion: this.question,
-          itemAnswers: this.answers
+          itemId: this.item.itemId,
+          itemQuestion: this.item.itemQuestion,
+          itemAnswers: this.item.itemAnswers
         } );
-        this.itemId += 1;
-        this.question = "";
-        this.answers = ['', ''];
+        this.item.itemId += 1;
+        this.item.itemQuestion = "";
+        this.item.itemAnswers = ['', ''];
       }
     },
     addAnotherAnswer: function () {
       // All answer field not empty
-      if (this.answers.every(function(i){return i !== "";})) {
-        this.answers.push("");
+      if (this.item.itemAnswers.every(function(i){return i !== "";})) {
+        this.item.itemAnswers.push("");
       }
     },
     runPoll: function () {
       // All answer field and question field not empty or saved
-      if (this.question.length && this.answers.every(function(i){return i !== "";}) || this.itemId > 0) {
-        socket.emit("runQuestion", {pollId: this.pollId, itemId: this.itemId})
-        console.log({pollId: this.pollId, itemId: this.itemId, itemQuestion: this.question, itemAnswers: this.answers})
+      if (this.item.itemQuestion.length && this.item.itemAnswers.every(function(i){return i !== "";}) || this.item.itemId > 0) {
+        socket.emit("runQuestion", {pollId: this.pollId, itemId: this.item.itemId})
+        console.log({pollId: this.pollId, itemId: this.item.itemId, itemQuestion: this.item.itemQuestion, itemAnswers: this.item.itemAnswers})
         window.location.href = "#/poll/" + this.pollId
       }
     },

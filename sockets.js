@@ -56,15 +56,16 @@ function sockets(io, socket, data) {
 
   let resultPageNr = 0;
   socket.on('getNextQ', function(d) {
-    if (resultPageNr < eval(data.getPoll(d.pollId).pollItems.length) - 2) {
-      resultPageNr += 1;
-      socket.emit('newQuestion', data.getQuestion(d.pollId, resultPageNr));
-      console.log("Moved to net question");
+    if (typeof data.getPoll(d.pollId).pollItems !== 'undefined') {
+      if (resultPageNr < eval(data.getPoll(d.pollId).pollItems.length) - 2) {
+        resultPageNr += 1;
+        socket.emit('newQuestion', data.getQuestion(d.pollId, resultPageNr));
+        console.log("Moved to net question");
+      }
     }
   })
 
   socket.on('getPrevQ', function(d) {
-    console.log("Previous question button clicked");
     if(resultPageNr > 0){
       resultPageNr -= 1;
       socket.emit('newQuestion', data.getQuestion(d.pollId, resultPageNr));

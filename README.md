@@ -15,29 +15,29 @@ The data structure was rewritten so it is clearer.
 ```javascript
 allPolls
 // Previously "polls", object
-allPolls.pollId
+allPolls[pollId]
 // Each poll, object
 // Defined as "currentPoll" in each function (Previously called "poll")
 
-	allPolls.pollId.lang
+	allPolls[pollId].lang
 	// Language of the poll, string
 
-	allPolls.pollId.pollItems
+	allPolls[pollId].pollItems
 	// All poll items, array
-	allPolls.pollId.pollItems[itemId]
+	allPolls[pollId].pollItems[itemId]
 	// One poll item including questions and answers (Previously called "question"), object
 
-		allPolls.pollId.pollItems[itemId].itemQuestion
+		allPolls[pollId].pollItems[itemId].itemQuestion
 		// The only 1 question in this poll item, string
-		allPolls.pollId.pollItems[itemId].itemAnswers
+		allPolls[pollId].pollItems[itemId].itemAnswers
 		// All the created preset answers in this poll item, array
 
-			allPolls.pollId.pollItems[itemId].itemAnswers[answerId]
+			allPolls[pollId].pollItems[itemId].itemAnswers[answerId]
 			// The answer content with the answerId in this array, string
 
-	allPolls.pollId.votersResponds
+	allPolls[pollId].votersResponds
 	// Count voters responds of a certain answer, 2 dimensional array
-		allPolls.pollId.votersResponds[itemId+1][answerId+1]
+		allPolls[pollId].votersResponds[itemId+1][answerId+1]
 		// How many times this answer was chosen, number
 		// Example: votersResponds[2][1]=3 means under Question3 the Answer2 is voted 3 times
 
