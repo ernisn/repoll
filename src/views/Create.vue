@@ -13,7 +13,7 @@
         rePoll
       </div>
       <div class="page-title">
-        Create Poll
+        <i> Create Poll - # {{ pollId }} </i>
       </div>
       <div v-on:click="switchLanguage"
            class="switch-language">
@@ -22,14 +22,21 @@
     </header>
 
     <br>
-    <input class="input-box-dark"
-           type="text"
-           placeholder="Choose your poll ID"
-           v-model="pollId"
-           id="pollIdEnter">
-    <br>
+      <input class="input-box-dark"
+             type="text"
+             placeholder="Choose your poll ID"
+             v-model="rawPollId"
+             id="pollIdEnter">
+      <button class="button-a hide-button"
+              id="checkIdBtn"
+              v-on:click="checkId">
+        Check ID
+      </button>
+    <div>
+      <i> {{ this.idNote }} </i>
+    </div>
     <button class="button-a hide-button"
-            id ="hideAfterCreate"
+            id ="createBtn"
             v-on:click="createPoll">
       {{uiLabels.createPoll}}
     </button>
@@ -65,15 +72,19 @@
         </button>
       </answer>
       <figure>
-        <figcaption>Saved Questions Preview</figcaption>
-        {{ pollData }}
-        <div v-for="(item, itemId) in pollData.pollItems"
+        <figcaption>Previous Question Review</figcaption>
+        <div v-if="pollData.itemQuestion">
+          Question: {{ pollData.itemQuestion }}
+          <br>
+          Provided answers are: {{ pollData.itemAnswers }}
+        </div>
+<!--        <div v-for="(item, itemId) in pollData.pollItems"
              v-bind:key="item">
           Question {{ itemId }} is: {{ item.itemQuestion }}
           <br>
           Provided answers are: {{ item.itemAnswers }}
           <br><br>
-        </div>
+        </div>-->
         <button class="button-a run-poll"
                 v-on:click="runPoll">
           Run Poll
@@ -98,7 +109,9 @@ export default {
   data: function () {
     return {
       lang: "",
+      rawPollId: "",
       pollId: "",
+      idNote: "*A new ID will be generated if ID exists",
       item: {
         itemId: 0,
         itemQuestion: "",
@@ -117,17 +130,29 @@ export default {
     socket.on("dataUpdate", (data) =>
       this.pollData = data
     )
+    socket.on("idChecked", (data) =>
+        this.pollId = data
+    )
     socket.on("pollCreated", (data) =>
       this.pollData = data
     )
   },
   methods: {
+    checkId: function () {
+      if(document.getElementById("pollIdEnter").value !== "") {
+        socket.emit("checkId", {pollId: this.rawPollId});
+        setTimeout(() => document.getElementById('pollIdEnter').value = this.pollId, 300);
+        document.getElementById("createBtn").style = "display: inline";
+        document.getElementById("checkIdBtn").style = "display: none";
+      }
+    },
     createPoll: function () {
       if(document.getElementById("pollIdEnter").value !== "") {
+        document.getElementById("pollIdEnter").style = "display: none";
+        this.idNote = "Poll ID: " + this.pollId;
         var elementToDisplay = document.getElementById("hideBeforeCreate");
         elementToDisplay.style.display = "grid";
-        var elementToHide = document.getElementById("hideAfterCreate");
-        elementToHide.style.display = "none";
+        document.getElementById("createBtn").style = "display: none";
         socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
       }
     },
@@ -188,6 +213,10 @@ export default {
   display: none
 }
 
+#createBtn {
+  display: none
+}
+
 main {
   display: grid;
   grid-template: "question     question"
@@ -220,7 +249,7 @@ main > figure {
 }
 figure .run-poll {
   position: absolute;
-  bottom: 1.2em;
+  top: 1.2em;
   right: 1.2em;
 }
 

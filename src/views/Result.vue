@@ -8,7 +8,7 @@
       rePoll
     </div>
     <div class="page-title">
-      Result - #ID {{ pollId }}
+      <i> Result - # {{ pollId }} </i>
     </div>
     <div v-on:click="switchLanguage"
          class="switch-language">

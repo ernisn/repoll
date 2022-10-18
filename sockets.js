@@ -9,6 +9,10 @@ function sockets(io, socket, data) {
     socket.emit('init', data.getUILabels(lang));
   });
 
+  socket.on('checkId', function(dataCheckId) {
+    socket.emit('idChecked', data.checkId(dataCheckId.pollId));
+  });
+
   socket.on('createPoll', function(dataCreate) {
     socket.emit('pollCreated', data.createPoll(dataCreate.pollId, dataCreate.lang));
   });

@@ -13,7 +13,7 @@
       rePoll
     </div>
     <div class="page-title">
-      Poll - #ID {{ pollId }}
+      <i> Poll - # {{ pollId }} </i>
     </div>
     <div v-on:click="switchLanguage"
          class="switch-language">

@@ -14,6 +14,15 @@ prototype of the Data object/class
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
 ***********************************************/
 
+// Check if the id provided exists
+Data.prototype.checkId = function(pollId) {
+  if (typeof this.allPolls[pollId] === "undefined") {
+    return pollId;
+  } else {
+    return (Math.random() + 1).toString(36).substring(7);
+  }
+}
+
 // Create a poll
 Data.prototype.createPoll = function(pollId, lang="en") {
   if (typeof this.allPolls[pollId] === "undefined") {
@@ -29,9 +38,13 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     this.allPolls[pollId] = currentPoll;
     console.log(
         "All Polls", this.allPolls, ", " +
-        "Current Poll ( ID:", pollId, "): ", currentPoll)
+        "Current Poll ( ID:", pollId, "): ", currentPoll);
+    return this.allPolls[pollId];
+  } else {
+    let randomId = (Math.random() + 1).toString(36).substring(7);
+    return this.allPolls[randomId];
   }
-  return this.allPolls[pollId];
+
 }
 
 // Add poll content - Items
@@ -67,7 +80,7 @@ Data.prototype.getAnswers = function(pollId, itemId) {
   if (typeof currentPoll !== 'undefined') {
     const currentItem = currentPoll.pollItems[itemId];
     if (typeof currentItem !== 'undefined') {
-      return {itemQ: currentItem.itemQuestion, itemAs: currentItem.itemAnswers};
+      return {itemQuestion: currentItem.itemQuestion, itemAnswers: currentItem.itemAnswers};
     }
   }
   return {}
